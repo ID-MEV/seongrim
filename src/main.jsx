@@ -6,6 +6,13 @@ import App from './App.jsx';
 import HomePage from './pages/HomePage.jsx';
 import './index.css';
 
+// Layout Imports
+import WelcomeLayout from './pages/Welcome/WelcomeLayout.jsx';
+import AboutLayout from './pages/About/AboutLayout.jsx';
+import SermonsLayout from './pages/Sermons/SermonsLayout.jsx';
+import EducationLayout from './pages/Education/EducationLayout.jsx';
+import NewsLayout from './pages/News/NewsLayout.jsx';
+
 // Page Imports
 import GreetingsPage from './pages/Welcome/GreetingsPage.jsx';
 import NewFamilyPage from './pages/Welcome/NewFamilyPage.jsx';
@@ -33,28 +40,58 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       // Welcome
-      { path: '/welcome/greetings', element: <GreetingsPage /> },
-      { path: '/welcome/new-family', element: <NewFamilyPage /> },
-      { path: '/welcome/service-times', element: <ServiceTimesPage /> },
-      { path: '/welcome/directions', element: <DirectionsPage /> },
+      {
+        path: '/welcome',
+        element: <WelcomeLayout />,
+        children: [
+          { path: 'greetings', element: <GreetingsPage /> },
+          { path: 'new-family', element: <NewFamilyPage /> },
+          { path: 'service-times', element: <ServiceTimesPage /> },
+          { path: 'directions', element: <DirectionsPage /> },
+        ],
+      },
       // About
-      { path: '/about/vision', element: <VisionPage /> },
-      { path: '/about/staff', element: <StaffPage /> },
-      { path: '/about/history', element: <HistoryPage /> },
+      {
+        path: '/about',
+        element: <AboutLayout />,
+        children: [
+          { path: 'vision', element: <VisionPage /> },
+          { path: 'staff', element: <StaffPage /> },
+          { path: 'history', element: <HistoryPage /> },
+        ],
+      },
       // Sermons
-      { path: '/sermons/sunday', element: <SundaySermonPage /> },
-      { path: '/sermons/choir', element: <ChoirPage /> },
-      { path: '/sermons/special-praise', element: <SpecialPraisePage /> },
+      {
+        path: '/sermons',
+        element: <SermonsLayout />,
+        children: [
+          { path: 'sunday', element: <SundaySermonPage /> },
+          { path: 'choir', element: <ChoirPage /> },
+          { path: 'special-praise', element: <SpecialPraisePage /> },
+        ],
+      },
       // Education
-      { path: '/education/toddler', element: <ToddlerPage /> },
-      { path: '/education/elementary', element: <ElementaryPage /> },
-      { path: '/education/youth', element: <YouthPage /> },
-      { path: '/education/young-adult', element: <YoungAdultPage /> },
+      {
+        path: '/education',
+        element: <EducationLayout />,
+        children: [
+          { path: 'toddler', element: <ToddlerPage /> },
+          { path: 'elementary', element: <ElementaryPage /> },
+          { path: 'youth', element: <YouthPage /> },
+          { path: 'young-adult', element: <YoungAdultPage /> },
+        ],
+      },
       // News
-      { path: '/news/church-news', element: <ChurchNewsPage /> },
-      { path: '/news/bulletin', element: <BulletinPage /> },
-      { path: '/news/album', element: <AlbumPage /> },
-      { path: '/news/free-board', element: <FreeBoardPage /> },
+      {
+        path: '/news',
+        element: <NewsLayout />,
+        children: [
+          { path: 'church-news', element: <ChurchNewsPage /> },
+          { path: 'bulletin', element: <BulletinPage /> },
+          { path: 'album', element: <AlbumPage /> },
+          { path: 'free-board', element: <FreeBoardPage /> },
+        ],
+      },
     ],
   },
 ]);
