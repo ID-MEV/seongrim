@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 import { FaBars, FaTimes, FaUser, FaSitemap } from 'react-icons/fa';
 
+// 로고 이미지 URL을 상수로 정의
+const LOGO_URL = 'https://api.seongrim.o-r.kr/wp-content/uploads/2025/08/logo.png';
+
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const handleScroll = () => {
-    setIsScrolled(window.scrollY > 10);
-  };
-
   useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -68,7 +70,9 @@ const Header = () => {
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
       <div className={styles.headerContent}>
         <h1 className={styles.logo}>
-          <Link to="/">성림교회</Link>
+          <Link to="/">
+            <img src={LOGO_URL} alt="성림교회 로고" />
+          </Link>
         </h1>
         <nav className={`${styles.nav} ${menuOpen ? styles.active : ''}`}>
           <ul className={styles.mainMenu}>
