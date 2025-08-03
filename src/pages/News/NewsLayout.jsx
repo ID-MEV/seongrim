@@ -12,12 +12,14 @@ const newsLinks = [
 
 const NewsLayout = () => {
   return (
-    <div className={styles.layoutContainer}>
+    <>
       <SideNav title="교회소식" links={newsLinks} />
-      <main className={styles.content}>
-        <Outlet />
-      </main>
-    </div>
+      <div className={styles.layoutContainer}>
+        <main className={styles.content}>
+          <Outlet />
+        </main>
+      </div>
+    </>
   );
 };
 

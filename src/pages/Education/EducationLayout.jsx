@@ -12,12 +12,14 @@ const educationLinks = [
 
 const EducationLayout = () => {
   return (
-    <div className={styles.layoutContainer}>
+    <>
       <SideNav title="교회학교" links={educationLinks} />
-      <main className={styles.content}>
-        <Outlet />
-      </main>
-    </div>
+      <div className={styles.layoutContainer}>
+        <main className={styles.content}>
+          <Outlet />
+        </main>
+      </div>
+    </>
   );
 };
 

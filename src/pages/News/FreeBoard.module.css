@@ -1,0 +1,76 @@
+.boardContainer {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.boardTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.writeButton {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.writeButton:hover {
+  background-color: var(--secondary-color);
+}
+
+.boardTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.boardTable th, .boardTable td {
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid var(--light-gray-color);
+}
+
+.boardTable th {
+  background-color: #f8f9fa;
+  font-weight: 500;
+  color: #333;
+}
+
+.thNumber { width: 10%; }
+.thTitle { width: 60%; }
+.thAuthor { width: 15%; }
+.thDate { width: 15%; }
+
+.tdTitle {
+  text-align: left;
+  padding-left: 1rem;
+}
+
+.tdTitle:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 4rem;
+  font-size: 1.2rem;
+}

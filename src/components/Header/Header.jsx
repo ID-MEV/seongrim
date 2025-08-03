@@ -68,35 +68,39 @@ const Header = () => {
 
   return (
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
-      <div className={styles.headerContent}>
-        <h1 className={styles.logo}>
-          <Link to="/">
-            <img src={LOGO_URL} alt="성림교회 로고" />
-          </Link>
-        </h1>
-        <nav className={`${styles.nav} ${menuOpen ? styles.active : ''}`}>
-          <ul className={styles.mainMenu}>
-            {navLinks.map((link) => (
-              <li key={link.title} className={styles.menuItem}>
-                <a href="#">{link.title}</a>
-                <ul className={styles.submenu}>
-                  {link.sublinks.map((sub) => (
-                    <li key={sub.title}>
-                      <Link to={sub.path}>{sub.title}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <div className={styles.utilityMenu}>
-          <Link to="/login" aria-label="로그인"><FaUser /><span>로그인</span></Link>
-          <Link to="/sitemap" aria-label="사이트맵"><FaSitemap /><span>사이트맵</span></Link>
+      <div className={styles.headerContainer}>
+        <div className={styles.topBar}>
+          <div className={styles.utilityMenu}>
+            <Link to="/login" aria-label="로그인"><FaUser /><span>로그인</span></Link>
+            <Link to="/sitemap" aria-label="사이트맵"><FaSitemap /><span>사이트맵</span></Link>
+          </div>
         </div>
-        <button className={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)} aria-label="메뉴 토글">
-          {menuOpen ? <FaTimes /> : <FaBars />}
-        </button>
+        <div className={styles.headerContent}>
+          <h1 className={styles.logo}>
+            <Link to="/">
+              <img src={LOGO_URL} alt="성림교회 로고" />
+            </Link>
+          </h1>
+          <nav className={`${styles.nav} ${menuOpen ? styles.active : ''}`}>
+            <ul className={styles.mainMenu}>
+              {navLinks.map((link) => (
+                <li key={link.title} className={styles.menuItem}>
+                  <a href="#">{link.title}</a>
+                  <ul className={styles.submenu}>
+                    {link.sublinks.map((sub) => (
+                      <li key={sub.title}>
+                        <Link to={sub.path}>{sub.title}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <button className={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)} aria-label="메뉴 토글">
+            {menuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
       </div>
     </header>
   );

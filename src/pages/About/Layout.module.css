@@ -1,10 +1,9 @@
 .layoutContainer {
   max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
+  margin: 0 auto; /* 상단 마진 제거 */
+  padding: 0; /* 좌우 여백 제거 */
 }
 
 .content {
-  margin-top: 40px; /* SideNav 아래에 여백 추가 */
   width: 100%;
 }

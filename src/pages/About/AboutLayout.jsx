@@ -11,12 +11,14 @@ const aboutLinks = [
 
 const AboutLayout = () => {
   return (
-    <div className={styles.layoutContainer}>
+    <>
       <SideNav title="교회소개" links={aboutLinks} />
-      <main className={styles.content}>
-        <Outlet />
-      </main>
-    </div>
+      <div className={styles.layoutContainer}>
+        <main className={styles.content}>
+          <Outlet />
+        </main>
+      </div>
+    </>
   );
 };
 

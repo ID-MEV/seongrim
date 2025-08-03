@@ -11,12 +11,14 @@ const sermonLinks = [
 
 const SermonsLayout = () => {
   return (
-    <div className={styles.layoutContainer}>
+    <>
       <SideNav title="말씀" links={sermonLinks} />
-      <main className={styles.content}>
-        <Outlet />
-      </main>
-    </div>
+      <div className={styles.layoutContainer}>
+        <main className={styles.content}>
+          <Outlet />
+        </main>
+      </div>
+    </>
   );
 };
 
