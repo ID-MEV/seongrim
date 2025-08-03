@@ -12,12 +12,14 @@ const welcomeLinks = [
 
 const WelcomeLayout = () => {
   return (
-    <div className={styles.layoutContainer}>
+    <>
       <SideNav title="환영합니다" links={welcomeLinks} />
-      <main className={styles.content}>
-        <Outlet />
-      </main>
-    </div>
+      <div className={styles.layoutContainer}>
+        <main className={styles.content}>
+          <Outlet />
+        </main>
+      </div>
+    </>
   );
 };
 

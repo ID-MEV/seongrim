@@ -6,6 +6,7 @@ const SideNav = ({ title, links }) => {
   return (
     <aside className={styles.sidenav}>
       <h2>{title}</h2>
+      <div className={styles.menuContainer}>
       <ul>
         {links.map((link) => (
           <li key={link.path}>
@@ -18,6 +19,7 @@ const SideNav = ({ title, links }) => {
           </li>
         ))}
       </ul>
+      </div>
     </aside>
   );
 };

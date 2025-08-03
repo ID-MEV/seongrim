@@ -1,12 +1,10 @@
 .layoutContainer {
-  display: flex;
   max-width: 1200px;
   margin: 40px auto;
   padding: 0 20px;
-  gap: 40px;
 }
 
 .content {
-  flex-grow: 1;
+  margin-top: 40px; /* SideNav 아래에 여백 추가 */
   width: 100%;
 }
