@@ -1,10 +1,39 @@
 import React from 'react';
+import styles from './Layout.module.css';
 
 const ElementaryPage = () => {
   return (
-    <div>
-      <h1>초등부</h1>
-      <p>이 페이지는 '초등부' 페이지입니다. 내용은 추후에 채워질 예정입니다.</p>
+    <div className={styles.pageContainer}>
+      <h1 className={styles.title}>초등부 (6-11세)</h1>
+      <div className={styles.content}>
+        <h2>"말씀으로 꿈을 키우는 하나님의 자녀"</h2>
+        <p>
+          초등부는 어린이들이 하나님의 말씀을 배우고, 기도를 통해 하나님과 교제하며,
+          예수님을 닮은 성품으로 성장하도록 돕습니다.
+        </p>
+
+        <h3>예배 안내</h3>
+        <ul>
+          <li><strong>시간:</strong> 주일 오전 11시</li>
+          <li><strong>장소:</strong> 교육관 2층 초등부실</li>
+          <li><strong>대상:</strong> 6세부터 11세까지의 어린이</li>
+        </ul>
+
+        <h3>주요 활동</h3>
+        <ul>
+          <li>학년별 성경공부 (공과)</li>
+          <li>신나는 찬양과 예배</li>
+          <li>여름성경학교 및 겨울캠프</li>
+          <li>친구 초청 잔치</li>
+        </ul>
+
+        <h3>섬기는 이들</h3>
+        <ul>
+          <li><strong>담당 교역자:</strong> 이믿음 전도사</li>
+          <li><strong>부장:</strong> 박지혜 교사</li>
+          <li><strong>교사:</strong> 김성실, 이충성, 최진리</li>
+        </ul>
+      </div>
     </div>
   );
 };
