@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 import { FaBars, FaTimes, FaUser, FaSitemap } from 'react-icons/fa';
+import LoginMemoModal from '../LoginMemoModal/LoginMemoModal'; // Import the modal component
 
 // 로고 이미지 URL을 상수로 정의
 const LOGO_URL = 'https://api.seongrim.o-r.kr/wp-content/uploads/2025/08/logo.png';
@@ -9,6 +10,7 @@ const LOGO_URL = 'https://api.seongrim.o-r.kr/wp-content/uploads/2025/08/logo.pn
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for the modal
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,43 +68,51 @@ const Header = () => {
     },
   ];
 
+  const handleLoginClick = (e) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+  };
+
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
-      <div className={styles.headerContainer}>
-        <div className={styles.topBar}>
-          <div className={styles.utilityMenu}>
-            <Link to="/login" aria-label="로그인"><FaUser /><span>로그인</span></Link>
-            <Link to="/sitemap" aria-label="사이트맵"><FaSitemap /><span>사이트맵</span></Link>
+    <>
+      <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
+        <div className={styles.headerContainer}>
+          <div className={styles.topBar}>
+            <div className={styles.utilityMenu}>
+              <a href="#" onClick={handleLoginClick} aria-label="로그인"><FaUser /><span>로그인</span></a>
+              <Link to="/sitemap" aria-label="사이트맵"><FaSitemap /><span>사이트맵</span></Link>
+            </div>
+          </div>
+          <div className={styles.headerContent}>
+            <h1 className={styles.logo}>
+              <Link to="/">
+                <img src={LOGO_URL} alt="성림교회 로고" />
+              </Link>
+            </h1>
+            <nav className={`${styles.nav} ${menuOpen ? styles.active : ''}`}>
+              <ul className={styles.mainMenu}>
+                {navLinks.map((link) => (
+                  <li key={link.title} className={styles.menuItem}>
+                    <a href="#">{link.title}</a>
+                    <ul className={styles.submenu}>
+                      {link.sublinks.map((sub) => (
+                        <li key={sub.title}>
+                          <Link to={sub.path}>{sub.title}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <button className={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)} aria-label="메뉴 토글">
+              {menuOpen ? <FaTimes /> : <FaBars />}
+            </button>
           </div>
         </div>
-        <div className={styles.headerContent}>
-          <h1 className={styles.logo}>
-            <Link to="/">
-              <img src={LOGO_URL} alt="성림교회 로고" />
-            </Link>
-          </h1>
-          <nav className={`${styles.nav} ${menuOpen ? styles.active : ''}`}>
-            <ul className={styles.mainMenu}>
-              {navLinks.map((link) => (
-                <li key={link.title} className={styles.menuItem}>
-                  <a href="#">{link.title}</a>
-                  <ul className={styles.submenu}>
-                    {link.sublinks.map((sub) => (
-                      <li key={sub.title}>
-                        <Link to={sub.path}>{sub.title}</Link>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <button className={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)} aria-label="메뉴 토글">
-            {menuOpen ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
-      </div>
-    </header>
+      </header>
+      <LoginMemoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 };
 
