@@ -4,14 +4,14 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.001);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .header.scrolled {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255 0.001);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -23,7 +23,6 @@
   display: flex;
   justify-content: flex-end;
   padding: 0.5rem 50px;
-  border-bottom: 1px solid var(--light-gray-color);
   background-color: #27372ecc
 }
 

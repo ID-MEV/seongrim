@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Header />
-      <main style={{ paddingTop: '104.5px' }}>
+      <main style={{ paddingTop: 'calc(2rem)' }}>
         <Outlet />
       </main>
       <Footer />
