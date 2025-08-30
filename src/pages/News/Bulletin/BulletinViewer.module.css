@@ -1,0 +1,16 @@
+/* BulletinViewer.module.css */
+.viewerContainer {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  padding: 20px;
+  min-height: 80vh;
+}
+
+.noSelection {
+  font-size: 1.2rem;
+  color: #888;
+}

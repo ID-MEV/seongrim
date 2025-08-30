@@ -1,0 +1,29 @@
+/* BulletinPage.module.css */
+.bulletinContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.viewerContainer {
+  flex: 3; /* 뷰어가 3의 비율을 차지 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  padding: 20px;
+  min-height: 80vh; /* 최소 높이를 설정하여 컨테이너가 보이도록 함 */
+}
+
+.listContainer {
+  flex: 1; /* 목록이 1의 비율을 차지 */
+  border: 1px solid #ddd;
+  padding: 10px;
+  max-height: 80vh; /* 목록이 너무 길어지면 스크롤 생성 */
+  overflow-y: auto;
+}
+
+.noSelection {
+  font-size: 1.2rem;
+  color: #888;
+}

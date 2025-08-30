@@ -1,0 +1,52 @@
+/* BulletinList.module.css */
+.listContainer {
+  flex: 1;
+  border: 1px solid #ddd;
+  padding: 10px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+.title {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+  text-align: center;
+  color: #333;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.listItem {
+  padding: 15px 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.listItem:hover {
+  background-color: #e9e9e9;
+}
+
+.listItem:last-child {
+  border-bottom: none;
+}
+
+.bulletinTitle {
+  font-weight: bold;
+  color: #444;
+}
+
+.bulletinDate {
+  font-size: 0.9rem;
+  color: #777;
+}
