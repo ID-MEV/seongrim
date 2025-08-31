@@ -5,7 +5,7 @@
         "id": 1,
         "title": "기본 레이아웃 개선 및 라우팅 최적화",
         "description": "기존 프로젝트의 레이아웃(헤더, 푸터, 네비게이션)을 보완하고, 라우팅 시스템을 최적화합니다. PRD에 명시된 링크들을 확인하여 업데이트하고, 반응형 디자인을 강화하여 전반적인 UI/UX를 개선합니다.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [],
         "priority": "high",
         "details": "- 기존 헤더, 푸터, 네비게이션 컴포넌트 리팩토링 및 기능 보완\n- 라우팅 구조 최적화 (예: 코드 스플리팅, 레이지 로딩 적용)\n- PRD 기반 네비게이션 링크 최신화\n- 모바일 및 태블릿 환경 대응을 위한 반응형 디자인 강화",
@@ -16,7 +16,7 @@
         "id": 2,
         "title": "환영 및 교회 소개 페이지 내용 추가 및 수정",
         "description": "기존 '환영 및 교회 소개' 페이지들(인사말, 교회 비전, 섬기는 사람들)에 PRD에 명시된 내용을 추가하고 수정합니다.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1
         ],
@@ -29,7 +29,7 @@
         "id": 3,
         "title": "교회 연혁 타임라인 UI 개발",
         "description": "기존 '교회 연혁' 페이지에 50주년 역사를 보여주는 타임라인 형태의 UI를 구현합니다.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1
         ],
@@ -42,7 +42,7 @@
         "id": 4,
         "title": "교회학교 페이지 콘텐츠 추가",
         "description": "기존 '교회학교' 페이지들(유아부, 아동부, 중고등부, 청년부)에 각 부서별 간단한 소개와 소식을 담을 수 있는 정적 콘텐츠를 추가합니다.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1
         ],
@@ -54,24 +54,24 @@
       {
         "id": 5,
         "title": "YouTube API 연동 백엔드 서비스 구축",
-        "description": "YouTube Data API v3를 사용하여 지정된 재생목록의 영상 정보를 주기적으로 가져오는 백엔드 서버를 구축합니다.",
+        "description": "YouTube Data API v3를 사용하여 지정된 재생목록의 영상 정보를 주기적으로 가져오는 백엔드 서버 구축이 완료되었습니다. 현재 서버는 PM2를 통해 실행 중입니다.",
+        "status": "done",
+        "dependencies": [],
+        "priority": "low",
         "details": "- API 키를 안전하게 관리\n- '주일 설교', '찬양대', '특별 찬양' 재생목록 ID를 기반으로 영상 목록(제목, 썸네일, 영상 ID)을 가져오는 로직 구현\n- 프론트엔드에 데이터를 제공할 API 엔드포인트 생성\n- 주기적인 데이터 동기화를 위한 스케줄러(예: cron job) 설정",
         "testStrategy": "백엔드 서버가 지정된 주기로 YouTube 재생목록을 성공적으로 동기화하는지 로그를 통해 확인하고, API 엔드포인트가 올바른 데이터를 반환하는지 테스트합니다.",
-        "priority": "high",
-        "dependencies": [],
-        "status": "pending",
         "subtasks": []
       },
       {
         "id": 6,
         "title": "주일 말씀 페이지 프론트엔드 개발",
         "description": "백엔드에서 제공하는 YouTube 영상 데이터를 받아 '주일 설교', '찬양대', '특별 찬양' 목록을 화면에 표시하는 UI를 개발하고, 백엔드 API와 통신하기 위한 프론트엔드 API 클라이언트 모듈을 구현합니다.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1,
           5
         ],
-        "priority": "high",
+        "priority": "low",
         "details": "사용자가 각 카테고리별 영상 목록을 보고, 썸네일을 클릭하여 영상을 시청할 수 있는 인터페이스를 구현합니다. 백엔드 API와 통신하기 위한 API 클라이언트 모듈(예: Axios, Fetch API 래퍼)을 구현하여 데이터 요청 및 상태 관리를 처리합니다. YouTube에 새 영상이 추가되면 웹사이트에 자동으로 반영되어야 합니다.",
         "testStrategy": "백엔드 API(Task 5)와 연동하여 영상 목록이 정상적으로 표시되는지 확인합니다. API 클라이언트 모듈이 백엔드 엔드포인트와 정상적으로 통신하고 응답 데이터를 올바르게 파싱하는지 검증합니다. YouTube 재생목록에 영상을 추가/삭제했을 때 웹사이트에 반영되는지 테스트합니다.",
         "subtasks": [
@@ -79,7 +79,7 @@
             "id": 1,
             "title": "",
             "description": "백엔드 API 연동을 위한 클라이언트 모듈 구현",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -88,7 +88,7 @@
             "id": 2,
             "title": "",
             "description": "영상 목록 UI 컴포넌트 개발 ('주일 설교', '찬양대', '특별 찬양')",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -99,7 +99,7 @@
         "id": 7,
         "title": "교회 소식 UI 컴포넌트 개발 (갤러리 형태)",
         "description": "기존 '교회 소식' 페이지에 교회 행사 사진 등을 표시할 갤러리 형태의 게시판 UI 컴포넌트를 구현합니다. 추후 Headless WordPress REST API와 연동될 것을 대비한 UI 템플릿입니다.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1
         ],
@@ -112,7 +112,7 @@
         "id": 8,
         "title": "주보 페이지 UI 컴포넌트 개발 (분할 화면)",
         "description": "기존 '주보' 페이지에 좌/우 분할 화면 레이아웃을 구현합니다. 오른쪽에는 역대 주보 제목 목록을, 왼쪽에는 선택된 주보 이미지를 표시합니다. Headless WordPress 연동을 위한 UI 템플릿입니다.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1
         ],
@@ -125,7 +125,7 @@
         "id": 9,
         "title": "자유 게시판 UI 컴포넌트 개발 (읽기 전용)",
         "description": "기존 '자유 게시판' 페이지에 읽기 전용 기능을 가진 기본 UI를 구현합니다. (현재는 읽기 전용 기능만 구현)",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1
         ],
@@ -150,14 +150,22 @@
           8,
           9
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-08-30T19:28:17.619Z",
-      "updated": "2025-08-30T19:28:17.620Z",
+      "updated": "2025-08-31T02:50:47.300Z",
       "description": "Tasks for master context"
+    }
+  },
+  "phase-2": {
+    "tasks": [],
+    "metadata": {
+      "created": "2025-08-31T02:52:25.742Z",
+      "updated": "2025-08-31T02:52:25.742Z",
+      "description": "Tag created on 8/31/2025"
     }
   }
 }

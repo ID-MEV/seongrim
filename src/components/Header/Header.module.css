@@ -143,6 +143,13 @@
   color: var(--text-color);
 }
 
+.mobileSubmenuToggle {
+  margin-left: auto;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   .nav {
@@ -153,6 +160,8 @@
     width: 100%;
     background-color: var(--white-color);
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    overflow-y: auto; /* Enable scrolling for long menus */
+    max-height: calc(100vh - 70px); /* Limit height to viewport */
   }
   .nav.active {
     display: block;
@@ -162,15 +171,41 @@
     gap: 0;
     padding: 1rem 0;
   }
+  .menuItem {
+    width: 100%;
+  }
   .menuItem > a {
     padding: 1rem 2rem;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   .submenu {
-    display: none; /* Simplified mobile menu, no dropdowns */
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    min-width: auto;
+    background-color: var(--light-gray-color);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  .submenu.submenuOpen {
+    max-height: 500px; /* Adjust as needed, should be large enough to show all sublinks */
+    transition: max-height 0.3s ease-in;
+  }
+  .submenu li a {
+    padding: 0.75rem 3rem; /* Indent sublinks */
   }
   .menuItem:hover .submenu {
-    display: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
   }
   .menuToggle {
     display: block;

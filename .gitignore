@@ -29,6 +29,7 @@ node_modules/
 # Environment variables
 .env
 .vscode
+settins.json
 # OS specific
 
 # Task files

@@ -27,6 +27,13 @@ const YoungAdultPage = () => {
           <li>리더십 훈련</li>
         </ul>
 
+        <h3>부서 소식</h3>
+        <ul>
+          <li><strong>[모임]</strong> 9월 청년부 전체 리더 모임이 다음 주 토요일에 있습니다.</li>
+          <li><strong>[나눔]</strong> 하반기 소그룹(셀) 리더 지원을 받습니다. (문의: 박은혜 목사)</li>
+          <li><strong>[행사]</strong> 가을맞이 청년부 체육대회가 10월에 개최될 예정입니다.</li>
+        </ul>
+
         <h3>섬기는 이들</h3>
         <ul>
           <li><strong>담당 교역자:</strong> 박은혜 목사</li>

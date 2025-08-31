@@ -27,6 +27,13 @@ const ElementaryPage = () => {
           <li>친구 초청 잔치</li>
         </ul>
 
+        <h3>부서 소식</h3>
+        <ul>
+          <li><strong>[알림]</strong> 여름성경학교 등록이 시작되었습니다. (기간: ~7/15)</li>
+          <li><strong>[안내]</strong> 매월 마지막 주일은 친구 초청 주일로 지켜집니다.</li>
+          <li><strong>[영상]</strong> 지난 달란트 시장 영상이 유튜브 채널에 업로드되었습니다.</li>
+        </ul>
+
         <h3>섬기는 이들</h3>
         <ul>
           <li><strong>담당 교역자:</strong> 이믿음 전도사</li>

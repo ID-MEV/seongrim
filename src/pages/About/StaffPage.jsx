@@ -35,6 +35,18 @@ const staffMembers = [
     image: pastorImage,
     details: '재정 및 관리 위원회',
   },
+  {
+    role: '찬양대 지휘자',
+    name: '김하모니',
+    image: pastorImage,
+    details: '주일 예배 찬양대 지휘',
+  },
+  {
+    role: '사무간사',
+    name: '박성실',
+    image: pastorImage,
+    details: '교회 행정 및 재정 담당',
+  },
 ];
 
 const StaffPage = () => {

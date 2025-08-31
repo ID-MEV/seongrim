@@ -20,7 +20,7 @@ const GreetingsPage = () => {
         </p>
         <br />
         <p>
-          <strong>성림교회 담임목사 OOO 드림</strong>
+          <strong>성림교회 담임목사 김사랑 드림</strong>
         </p>
       </div>
     </div>

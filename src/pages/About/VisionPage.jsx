@@ -16,11 +16,11 @@ const VisionPage = () => {
           <li><strong>예배 (Worship):</strong> 하나님을 향한 진정한 예배를 통해 삶의 목적을 발견합니다.</li>
           <li><strong>양육 (Discipleship):</strong> 체계적인 성경 공부와 훈련을 통해 예수님의 제자로 성장합니다.</li>
           <li><strong>교제 (Fellowship):</strong> 소그룹(목장) 안에서 서로 사랑하고 섬기며 건강한 공동체를 이룹니다.</li>
-          <li><strong>선교 (Mission):</strong> 지역 사회와 열방을 향해 복음을 전하고 하나님의 사랑을 실천합니다.</li>
+          <li><strong>섬김 (Service):</strong> 지역 사회와 열방을 향해 복음을 전하고 하나님의 사랑을 실천합니다.</li>
           <li><strong>다음 세대 (Next Generation):</strong> 다음 세대를 믿음의 유산을 계승하는 리더로 세웁니다.</li>
         </ul>
 
-        <h3>2025년 표어</h3>
+        <h3>2024년 표어</h3>
         <p className={styles.motto}>
           <strong>"주여, 이제 회복하게 하소서" (행 1:6)</strong>
         </p>

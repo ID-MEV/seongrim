@@ -27,6 +27,13 @@ const YouthPage = () => {
           <li>단기선교 및 봉사활동</li>
         </ul>
 
+        <h3>부서 소식</h3>
+        <ul>
+          <li><strong>[모집]</strong> 2025 여름 단기선교 참가자를 모집합니다. (문의: 최헌신 부장)</li>
+          <li><strong>[안내]</strong> 중고등부 기도회가 매주 금요일 저녁 8시에 있습니다.</li>
+          <li><strong>[공지]</strong> 다음 주 예배는 전체 야외 예배로 드려집니다.</li>
+        </ul>
+
         <h3>섬기는 이들</h3>
         <ul>
           <li><strong>담당 교역자:</strong> 이믿음 전도사</li>

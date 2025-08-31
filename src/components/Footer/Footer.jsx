@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link
 import styles from './Footer.module.css';
 import { FaYoutube, FaFacebook, FaInstagram } from 'react-icons/fa';
 
@@ -15,10 +16,10 @@ const Footer = () => {
         <div className={styles.footerLinks}>
           <h4>바로가기</h4>
           <ul>
-            <li><a href="#">교회소개</a></li>
-            <li><a href="#">주일설교</a></li>
-            <li><a href="#">교회학교</a></li>
-            <li><a href="#">오시는길</a></li>
+            <li><Link to="/about/vision">교회소개</Link></li>
+            <li><Link to="/sermons/sunday">주일설교</Link></li>
+            <li><Link to="/education/toddler">교회학교</Link></li>
+            <li><Link to="/welcome/directions">오시는길</Link></li>
           </ul>
         </div>
         <div className={styles.socialMedia}>
