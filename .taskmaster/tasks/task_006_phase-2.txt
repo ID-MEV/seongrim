@@ -1,0 +1,43 @@
+# Task ID: 6
+# Title: '앨범' 페이지 갤러리 레이아웃 구현 (Implement 'Album' Page with Gallery Layout)
+# Status: pending
+# Dependencies: 4
+# Priority: medium
+# Description: WordPress '앨범' 게시물의 본문에 포함된 모든 이미지를 가져와, 사진 중심의 갤러리 페이지를 개발한다. 메이슨리(Masonry) 레이아웃, 무한 스크롤, 스켈레톤 로더, 라이트박스 기능을 포함하여 사용자 경험을 극대화한다.
+# Details:
+
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. '앨범' 게시물 이미지 파싱 및 API 함수 고도화 [pending]
+### Dependencies: None
+### Description: '앨범' 카테고리 게시물을 페이지별로 요청하고, 각 게시물 본문(HTML)에서 모든 이미지(`<img>`) 태그를 추출하는 데이터 페칭(fetching) 함수를 구현한다. 무한 스크롤을 위해 페이지 번호를 인자로 받고, 전체 페이지 수를 반환하는 기능을 포함한다.
+### Details:
+
+
+## 2. 스켈레톤 UI 및 갤러리 아이템 컴포넌트 개발 [pending]
+### Dependencies: None
+### Description: 데이터 로딩 상태를 표시할 메이슨리 레이아웃 형태의 스켈레톤 UI를 개발한다. 또한, 개별 이미지를 화면에 표시할 `GalleryItem` 컴포넌트를 만든다.
+### Details:
+
+
+## 3. 메이슨리 레이아웃 및 무한 스크롤 기능 구현 [pending]
+### Dependencies: 6.1, 6.2
+### Description: `react-masonry-css`를 사용하여 갤러리 레이아웃을 구성한다. 사용자가 페이지 하단에 도달하면 다음 페이지의 이미지를 자동으로 불러와 기존 목록에 추가하는 무한 스크롤 기능을 구현한다.
+### Details:
+
+
+## 4. 라이트박스 기능 연동 [pending]
+### Dependencies: 6.3
+### Description: `yet-another-react-lightbox` 라이브러리를 `GalleryItem`과 연동한다. 이미지 클릭 시, 현재까지 로드된 모든 이미지를 탐색할 수 있는 라이트박스가 열리도록 구현한다.
+### Details:
+
+
+## 5. 반응형 디자인 최종 적용 및 통합 테스트 [pending]
+### Dependencies: 6.4
+### Description: 메이슨리 레이아웃, 무한 스크롤, 라이트박스 등 구현된 모든 기능이 데스크톱, 태블릿, 모바일 환경에서 올바르게 동작하는지 최종 테스트하고 디자인을 미세 조정한다.
+### Details:
+
+

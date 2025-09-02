@@ -1,0 +1,43 @@
+# Task ID: 5
+# Title: 공용 BoardPage 컴포넌트 개발 및 게시판 페이지 구현
+# Status: pending
+# Dependencies: 4
+# Priority: high
+# Description: 초기 계획을 수정하여, 재사용 가능한 BoardPage 공용 컴포넌트를 먼저 개발하고, 이를 활용해 '주보'와 '교회 소식' 페이지를 효율적으로 구현한다. API 응답 헤더(X-WP-TotalPages)를 이용한 페이지네이션과 URL 쿼리 스트링(?page=...)을 통한 페이지 상태 관리를 포함한다.
+# Details:
+
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 페이지네이션을 지원하는 데이터 Fetching 함수 개선 [pending]
+### Dependencies: None
+### Description: 4번 태스크에서 만든 axios 클라이언트를 개선하여, API 요청 시 응답 본문(게시물 목록)과 함께 응답 헤더의 X-WP-TotalPages 값('전체 페이지 수')을 함께 반환하도록 수정한다. 페이지 번호를 인자로 받아 해당 페이지의 데이터를 요청하는 기능을 포함한다.
+### Details:
+
+
+## 2. 공용 게시물 UI 컴포넌트 개발 (PostList, Pagination) [pending]
+### Dependencies: None
+### Description: 데이터를 받아 화면에 표시하는 역할만 담당하는 순수 UI 컴포넌트를 개발한다. 1) 게시물 목록과 아이템을 위한 PostList/PostListItem, 2) 페이지 번호를 표시하고 이동 이벤트를 처리할 Pagination 컴포넌트를 포함한다.
+### Details:
+
+
+## 3. 핵심 로직을 담은 'BoardPage' 공용 컴포넌트 개발 [pending]
+### Dependencies: 5.1, 5.2
+### Description: categoryId와 title을 props로 받는 재사용 가능한 BoardPage 컴포넌트를 개발한다. 이 컴포넌트는 다음 핵심 로직을 모두 담당한다: 1) URL 쿼리 스트링에서 page 값을 읽어 API 호출, 2) use-effect와 use-state를 사용한 데이터 상태 관리(게시물, 전체 페이지 수, 로딩, 에러), 3) 로딩/에러 상태에 따른 UI 분기 처리, 4) 데이터와 이벤트 핸들러를 UI 컴포넌트(PostList, Pagination)에 전달.
+### Details:
+
+
+## 4. '주보' 및 '교회 소식' 페이지 최종 조립 [pending]
+### Dependencies: 5.3
+### Description: react-router-dom을 이용해 /bulletin과 /church-news 경로에 페이지를 생성한다. 각 페이지에서는 BoardPage 공용 컴포넌트를 가져와, 각각에 맞는 categoryId와 title props를 전달하여 최종 페이지를 완성한다. (예: <BoardPage categoryId={1} title="주보" />)
+### Details:
+
+
+## 5. 반응형 디자인 적용 및 최종 테스트 [pending]
+### Dependencies: 5.4
+### Description: 개발된 모든 공용 컴포넌트(PostList, Pagination 등)에 반응형 스타일을 적용한다. 최종 조립된 '주보'와 '교회 소식' 두 페이지가 데스크톱, 태블릿, 모바일 등 다양한 화면 크기에서 정상적으로 표시되는지 확인하고 테스트한다.
+### Details:
+
+

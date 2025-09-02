@@ -1,0 +1,93 @@
+{
+	"meta": {
+		"generatedAt": "2025-09-02T11:06:16.897Z",
+		"tasksAnalyzed": 10,
+		"totalTasks": 10,
+		"analysisCount": 10,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": false
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "공용 '히어로 배너' 컴포넌트 개발 (Develop Reusable 'Hero Banner' Component)",
+			"complexityScore": 3,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "The current Hero Banner component accepts a title and background image. To increase its versatility, expand the component to optionally accept a subtitle string and a call-to-action (CTA) button configuration object (e.g., `{text: 'Learn More', link: '/about'}`). Ensure these new elements are styled correctly and integrated into the responsive design.",
+			"reasoning": "This is a standard UI component development task with clear, self-contained requirements. The complexity is low as it involves basic props, styling, and media queries without complex state management or API integration."
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "콘텐츠 페이드인 애니메이션 효과 구현 (Implement Content Fade-in Animation)",
+			"complexityScore": 5,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "To improve accessibility, expand the fade-in animation logic. Add a new subtask to detect the user's `prefers-reduced-motion` setting. If this setting is enabled, the fade-in animation should be disabled, and the content should appear instantly without any transition effects.",
+			"reasoning": "The task involves more than simple UI styling; it requires knowledge of browser APIs like Intersection Observer, creating reusable logic (custom hooks), and considering performance implications, which adds moderate complexity."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "10개 주요 페이지에 공통 디자인(배너, 애니메이션) 적용 (Apply Common Design to 10 Pages)",
+			"complexityScore": 4,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "The current subtasks group pages by category. To provide more granular tracking, expand this task by creating a separate subtask for each of the 10 pages. Each subtask should involve applying the Hero Banner with its specific content and integrating the fade-in animation on the page's main content blocks.",
+			"reasoning": "The task is repetitive and involves applying existing components, not creating new complex logic. The complexity comes from the volume of pages (10) and the need for careful, consistent application and asset management, making it more of an organizational challenge than a technical one."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Headless WordPress API 연동 설정 (Configure Headless WordPress API Integration)",
+			"complexityScore": 6,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "The current API client setup is focused on successful data fetching. Expand this by creating a dedicated subtask for 'Implementing a Centralized API Error Handling Strategy'. This should include creating custom error classes for common API issues (e.g., 404 Not Found, 500 Server Error) and integrating a logging service to report failed requests for easier debugging.",
+			"reasoning": "This is a critical infrastructure task that involves architectural decisions (REST vs. GraphQL), setting up a secure and scalable data-fetching layer, and defining data contracts (types). Errors in this task can impact many subsequent features."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "'주보' 및 '교회 소식' 페이지 기능 구현 (Implement 'Bulletin' and 'Church News' Pages)",
+			"complexityScore": 7,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "For improved SEO and initial page load performance, expand this task with a new subtask: 'Implement Server-Side Rendering (SSR) or Static Site Generation (SSG) for Post List Pages'. This will involve modifying the data fetching logic to run on the server during the build process or on each request, passing the initial data as props to the page component.",
+			"reasoning": "This task combines API integration, state management (loading, error, pagination), UI development, and component refactoring. Implementing robust pagination logic that handles query parameters and API calls correctly is a moderately complex challenge."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "'앨범' 페이지 갤러리 레이아웃 구현 (Implement 'Album' Page with Gallery Layout)",
+			"complexityScore": 7,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "The current plan focuses on layout and functionality. To optimize performance for this image-heavy page, add a new subtask: 'Implement Image Lazy Loading'. This involves modifying the gallery item component to only load an image's full-resolution source when it is about to enter the viewport, using a placeholder initially.",
+			"reasoning": "The task requires implementing a complex, non-standard layout (Masonry) which can be challenging to make responsive and performant. It also involves integrating and configuring third-party libraries for the layout and lightbox functionality, adding another layer of complexity."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "백엔드 YouTube 데이터 캐싱 시스템 구축 (Build Backend YouTube Data Caching System)",
+			"complexityScore": 8,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "The current implementation uses JSON files for caching, which can be inefficient for frequent reads or larger datasets. Expand this task with a new subtask: 'Evaluate and Implement a Database Caching Solution'. This involves replacing the file-saving logic with a more robust storage system like Redis for fast in-memory caching or a simple database like SQLite for persistent storage.",
+			"reasoning": "This is a pure backend task involving external API integration, automated scheduled jobs (cron), data storage, and robust error handling. Setting up and debugging cron jobs and ensuring the system is resilient to API failures makes it highly complex."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "캐시된 YouTube 데이터를 제공하는 백엔드 API 엔드포인트 개발 (Develop API Endpoint for Cached YouTube Data)",
+			"complexityScore": 4,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "To ensure the stability of the server, expand this task with a new subtask: 'Implement Rate Limiting for the API Endpoint'. This involves adding middleware to track and limit the number of requests a single client can make to the `/api/videos` endpoint within a specific time frame, returning a 429 Too Many Requests error if the limit is exceeded.",
+			"reasoning": "This is a standard task of creating a RESTful API endpoint. The logic is straightforward (read from a data source and return JSON) and doesn't involve complex business logic or external dependencies beyond the pre-existing cache."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "YouTube 연동 페이지 프론트엔드 UI/UX 구현 (Implement YouTube Integration Frontend UI)",
+			"complexityScore": 6,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "The current implementation displays a list of all videos. To improve usability, expand this task with a new subtask: 'Implement a Client-Side Search/Filter Functionality'. This involves adding a search input field to each video page that allows users to filter the displayed video cards by title in real-time.",
+			"reasoning": "The task involves creating a complete frontend feature slice: developing a reusable UI component, implementing data fetching logic with state management (loading, error), and composing these into multiple pages. It connects the frontend to a newly created backend endpoint."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "최종 통합 테스트 및 배포 준비 (Final Integration Testing & Deployment Prep)",
+			"complexityScore": 7,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "The current plan prepares the application for deployment. To ensure post-deployment stability, add a new subtask: 'Configure Production Monitoring and Alerting'. This involves setting up a service (like Sentry for error tracking or UptimeRobot for availability) to monitor the live application and automatically notify the team of critical errors or downtime.",
+			"reasoning": "This task is complex due to its broad scope, requiring a holistic understanding of all new features and their interactions. It involves meticulous testing across multiple dimensions (functional, UI, performance, cross-browser) and coordinating the final bug-fixing process before a release."
+		}
+	]
+}

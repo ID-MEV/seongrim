@@ -1,0 +1,49 @@
+# Task ID: 7
+# Title: 백엔드 YouTube 데이터 캐싱 시스템 구축 (Build Backend YouTube Data Caching System)
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: YouTube API의 일일 요청 할당량을 효율적으로 사용하기 위해, 서버에서 주기적으로 영상 데이터를 가져와 자체적으로 저장(캐싱)하는 시스템을 구축합니다.
+# Details:
+지정된 3개의 YouTube 재생목록 ID를 사용하여 하루에 한 번 정해진 시간에 API를 호출하는 스케줄링 작업(Cron Job)을 설정합니다. 가져온 영상 데이터(ID, 제목, 썸네일, 재생 시간 등)를 파일(JSON) 또는 DB에 저장합니다.
+
+# Test Strategy:
+스케줄링 작업이 지정된 시간에 정상적으로 실행되는지 서버 로그를 통해 확인합니다. 캐시된 데이터가 실제 YouTube 재생목록의 최신 정보와 일치하는지 수동으로 검증합니다.
+
+# Subtasks:
+## 1. YouTube API 연동 및 데이터 가져오기 함수 구현 [pending]
+### Dependencies: None
+### Description: YouTube Data API v3를 사용하여 특정 재생목록의 영상 목록과 각 영상의 상세 정보(ID, 제목, 썸네일, 재생 시간 등)를 가져오는 핵심 함수를 개발합니다.
+### Details:
+Google Cloud Platform에서 API 키를 발급받고, 관련 클라이언트 라이브러리를 설정합니다. `playlistItems.list`와 `videos.list` 엔드포인트를 활용하여 필요한 데이터를 수집하는 로직을 구현합니다.
+
+## 2. 가져온 YouTube 데이터를 JSON 파일로 저장하는 로직 구현 [pending]
+### Dependencies: 7.1
+### Description: API를 통해 가져온 영상 데이터를 서버의 파일 시스템에 JSON 형식으로 저장하고 관리하는 기능을 구현합니다.
+### Details:
+재생목록 ID별로 구분된 JSON 파일을 생성하는 로직을 만듭니다. 예를 들어, `data/playlist_ID1.json`과 같이 저장하며, 데이터를 저장하기 전에 기존 파일을 덮어쓰는 방식을 사용합니다.
+
+## 3. 데이터 수집 스크립트 자동 실행을 위한 스케줄러(Cron Job) 설정 [pending]
+### Dependencies: 7.1, 7.2
+### Description: 매일 정해진 시간에 데이터 수집 및 저장 스크립트가 자동으로 실행되도록 서버에 스케줄링 작업을 설정합니다.
+### Details:
+서버 환경에 맞는 스케줄링 도구(예: Linux의 crontab, Node.js의 node-cron)를 사용하여 하루에 한 번 특정 시간에 스크립트를 실행하도록 구성합니다.
+
+## 4. API 요청 및 파일 저장 과정의 오류 처리 및 로깅 시스템 구축 [pending]
+### Dependencies: 7.1, 7.2
+### Description: 데이터 수집 및 저장 과정에서 발생할 수 있는 예외(예: API 할당량 초과, 네트워크 오류, 파일 쓰기 실패 등)를 처리하고, 실행 결과와 오류 내용을 로그 파일에 기록하는 시스템을 구축합니다.
+### Details:
+`try-catch` 블록을 사용하여 API 호출 및 파일 I/O 작업의 잠재적 오류를 처리합니다. 성공, 실패, 오류 내용 등을 포함한 로그를 타임스탬프와 함께 파일(예: `cron.log`)에 기록하여 작업 실행 상태를 추적할 수 있도록 합니다.
+
+## 5. 설정 분리 및 전체 프로세스 통합 리팩토링 [pending]
+### Dependencies: 7.1, 7.2, 7.4
+### Description: 하드코딩된 값(API 키, 재생목록 ID 등)을 별도의 설정 파일(예: .env, config.json)로 분리하고, 개발된 모든 기능을 하나의 실행 스크립트로 통합하여 유지보수성을 높입니다.
+### Details:
+환경 변수나 설정 파일을 사용하여 YouTube API 키, 3개의 재생목록 ID 목록, 데이터 저장 경로 등을 관리합니다. 이전 단계들에서 개발한 기능들을 호출하여, 스케줄러가 실행할 단일 진입점 스크립트를 완성합니다.
+
+## 6. youtube_videos_cache 테이블에 position (INTEGER) 컬럼 추가 [pending]
+### Dependencies: None
+### Description: YouTube 재생목록 순서를 유지하기 위해 youtube_videos_cache 테이블에 position (INTEGER) 컬럼을 추가합니다.
+### Details:
+
+

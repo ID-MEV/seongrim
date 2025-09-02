@@ -1,0 +1,61 @@
+# Task ID: 9
+# Title: YouTube 연동 페이지 프론트엔드 UI/UX 구현 (Implement YouTube Integration Frontend UI)
+# Status: pending
+# Dependencies: 8
+# Priority: high
+# Description: 주일 설교, 찬양대, 특별 찬양 페이지에서 자체 백엔드 API를 통해 영상 목록을 받아와 카드 형태로 표시합니다.
+# Details:
+3개의 각 페이지는 자체 백엔드 API 엔드포인트(Task 8)를 호출하여 영상 데이터를 가져옵니다. 썸네일, 제목, 재생 시간 등의 정보를 포함하는 카드 UI 컴포넌트를 개발하고, 이를 사용하여 비디오 목록을 렌더링합니다.
+
+# Test Strategy:
+각 페이지가 올바른 재생목록 데이터를 표시하는지 확인합니다. 카드 UI가 디자인 시안과 일치하는지, 반응형 디자인이 잘 적용되었는지 다양한 디바이스에서 검수합니다. 데이터 로딩 중/에러 발생 시의 UI 상태도 확인합니다.
+
+# Subtasks:
+## 1. 재사용 가능한 '영상 카드' UI 컴포넌트 개발 [pending]
+### Dependencies: None
+### Description: YouTube 영상의 썸네일, 제목, 재생 시간 등 주요 정보를 표시하는 재사용 가능한 카드 형태의 UI 컴포넌트를 개발합니다. 이 컴포넌트는 모든 영상 목록 페이지에서 공통으로 사용됩니다.
+### Details:
+props를 통해 영상 데이터(thumbnailUrl, title, duration)를 받아 동적으로 렌더링하도록 구현합니다. 디자인 시안에 맞춰 HTML 구조와 CSS 스타일링을 적용하고, 클릭 시 YouTube 영상 페이지로 이동하는 링크를 포함합니다.
+
+## 2. 백엔드 API 연동을 위한 데이터 페칭 로직 구현 [pending]
+### Dependencies: None
+### Description: Task 8에서 개발된 백엔드 API 엔드포인트를 호출하여 특정 재생목록의 영상 데이터를 가져오는 로직을 구현합니다. 데이터 로딩, 성공, 실패 상태를 관리하는 기능을 포함합니다.
+### Details:
+재사용성을 높이기 위해 React Query나 SWR과 같은 데이터 페칭 라이브러리를 사용하거나, `useFetchVideos`와 같은 커스텀 훅(Hook) 형태로 구현합니다. 이 훅은 playlistId를 인자로 받아 { data, isLoading, error } 상태 객체를 반환해야 합니다.
+
+## 3. '주일 설교' 페이지 구현 및 영상 목록 렌더링 [pending]
+### Dependencies: 9.1, 9.2
+### Description: '주일 설교' 페이지의 전체 레이아웃을 구성하고, 개발된 데이터 페칭 로직과 영상 카드 컴포넌트를 조합하여 실제 영상 목록을 화면에 렌더링합니다.
+### Details:
+데이터 페칭 로직을 호출하여 '주일 설교' 재생목록 데이터를 가져옵니다. 로딩 중일 때는 스켈레톤 UI를, 에러 발생 시에는 사용자에게 안내 메시지를 표시합니다. 데이터 로딩이 완료되면 영상 카드 컴포넌트를 그리드 형태로 나열하여 목록을 표시합니다.
+
+## 4. '찬양대' 및 '특별 찬양' 페이지 구현 [pending]
+### Dependencies: 9.3
+### Description: '주일 설교' 페이지와 동일한 구조를 재사용하여 '찬양대'와 '특별 찬양' 페이지를 구현합니다. 각 페이지에 맞는 재생목록 데이터를 API로부터 가져와 표시합니다.
+### Details:
+기존에 구현된 페이지 구조와 컴포넌트를 재활용하되, 각 페이지에 해당하는 고유한 playlistId를 데이터 페칭 로직에 전달하여 올바른 영상 목록을 불러오도록 설정합니다.
+
+## 5. 반응형 디자인 적용 및 최종 UI 검수 [pending]
+### Dependencies: 9.4
+### Description: 구현된 3개의 영상 목록 페이지 전체에 반응형 디자인을 적용하여 데스크톱, 태블릿, 모바일 등 다양한 디바이스에서 최적화된 UI/UX를 제공하도록 합니다.
+### Details:
+미디어 쿼리를 사용하여 화면 너비에 따라 영상 카드 그리드의 컬럼 수를 동적으로 변경합니다. (예: 데스크톱 4열, 태블릿 2열, 모바일 1열) 폰트 크기, 여백 등을 조절하여 가독성을 확보합니다.
+
+## 6. YouTubeVideoList 컴포넌트 개발 [pending]
+### Dependencies: None
+### Description: src/components/YouTubeVideoList.jsx 컴포넌트를 생성하여 YouTube 영상 목록을 표시하도록 구현합니다. playlistId를 prop으로 받아 백엔드 API를 호출하고, position 순서대로 영상을 정렬하여 썸네일, 제목, 게시일 등을 표시합니다.
+### Details:
+
+
+## 7. VideoModal 컴포넌트 개발 및 스타일링 [pending]
+### Dependencies: None
+### Description: src/components/VideoModal.jsx 컴포넌트와 src/components/VideoModal.css 파일을 생성하여 영상 클릭 시 모달 창에서 YouTube 영상을 재생하는 기능을 구현합니다.
+### Details:
+
+
+## 8. 주일설교, 찬양대, 특별찬양 페이지에 컴포넌트 통합 [pending]
+### Dependencies: None
+### Description: SundaySermonPage.jsx, ChoirPage.jsx, SpecialPraisePage.jsx 세 페이지를 수정하여 기존의 가상 데이터를 제거하고, YouTubeVideoList와 VideoModal 컴포넌트를 통합합니다. 각 페이지에는 해당 플레이리스트 ID를 설정할 수 있는 플레이스홀더를 추가합니다.
+### Details:
+
+
