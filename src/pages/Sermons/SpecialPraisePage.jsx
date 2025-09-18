@@ -18,7 +18,8 @@ const SpecialPraisePage = () => {
   };
 
   // 특별찬양 플레이리스트 ID (실제 YouTube 플레이리스트 ID로 교체 필요)
-  const specialPraisePlaylistId = 'YOUR_SPECIAL_PRAISE_PLAYLIST_ID'; 
+  // TODO: Replace with the actual YouTube playlist ID for Special Praise
+  const specialPraisePlaylistId = 'PLT8iueXeLMBxWIEt_AngzLaYso2pd7w9v'; 
 
   return (
     <div className={styles.pageContainer}>

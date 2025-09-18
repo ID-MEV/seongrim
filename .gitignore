@@ -32,6 +32,9 @@ node_modules/
 settins.json
 # OS specific
 
+*storybook.log
+storybook-static
+
 # Task files
 # tasks.json
 # tasks/ 

@@ -18,7 +18,8 @@ const ChoirPage = () => {
   };
 
   // 찬양대 플레이리스트 ID (실제 YouTube 플레이리스트 ID로 교체 필요)
-  const choirPlaylistId = 'YOUR_CHOIR_PLAYLIST_ID'; 
+  // TODO: Replace with the actual YouTube playlist ID for Choir
+  const choirPlaylistId = 'PLT8iueXeLMByLxAYh26k6UYEDpAVxBIM_'; 
 
   return (
     <div className={styles.pageContainer}>

@@ -17,7 +17,7 @@ const NewsLayout = lazy(() => import('./pages/News/NewsLayout.jsx'));
 const GreetingsPage = lazy(() => import('./pages/Welcome/GreetingsPage.jsx'));
 const NewFamilyPage = lazy(() => import('./pages/Welcome/NewFamilyPage.jsx'));
 const ServiceTimesPage = lazy(() => import('./pages/Welcome/ServiceTimesPage.jsx'));
-const DirectionsPage = lazy(() => import('./pages/Welcome/DirectionsPage.jsx'));
+import DirectionsPage from './pages/Welcome/DirectionsPage.jsx';
 const VisionPage = lazy(() => import('./pages/About/VisionPage.jsx'));
 const StaffPage = lazy(() => import('./pages/About/StaffPage.jsx'));
 const HistoryPage = lazy(() => import('./pages/About/HistoryPage.jsx'));
@@ -25,13 +25,15 @@ const SundaySermonPage = lazy(() => import('./pages/Sermons/SundaySermonPage.jsx
 const ChoirPage = lazy(() => import('./pages/Sermons/ChoirPage.jsx'));
 const SpecialPraisePage = lazy(() => import('./pages/Sermons/SpecialPraisePage.jsx'));
 const ToddlerPage = lazy(() => import('./pages/Education/ToddlerPage.jsx'));
-const ElementaryPage = lazy(() => import('./pages/Education/ElementaryPage.jsx'));
+import ElementaryPage from './pages/Education/ElementaryPage.jsx';
 const YouthPage = lazy(() => import('./pages/Education/YouthPage.jsx'));
 const YoungAdultPage = lazy(() => import('./pages/Education/YoungAdultPage.jsx'));
-const ChurchNewsPage = lazy(() => import('./pages/News/ChurchNewsPage.jsx'));
-const BulletinPage = lazy(() => import('./pages/News/BulletinPage.jsx'));
-const AlbumPage = lazy(() => import('./pages/News/AlbumPage.jsx'));
+
+const BoardPage = lazy(() => import('./pages/News/BoardPage.jsx'));
 const FreeBoardPage = lazy(() => import('./pages/News/FreeBoardPage.jsx'));
+
+const AlbumPage = lazy(() => import('./pages/News/AlbumPage.jsx'));
+
 
 const router = createBrowserRouter([
   {
@@ -47,7 +49,7 @@ const router = createBrowserRouter([
           { path: 'greetings', element: <Suspense fallback={<div>Loading Greetings...</div>}><GreetingsPage /></Suspense> },
           { path: 'new-family', element: <Suspense fallback={<div>Loading New Family...</div>}><NewFamilyPage /></Suspense> },
           { path: 'service-times', element: <Suspense fallback={<div>Loading Service Times...</div>}><ServiceTimesPage /></Suspense> },
-          { path: 'directions', element: <Suspense fallback={<div>Loading Directions...</div>}><DirectionsPage /></Suspense> },
+          { path: 'directions', element: <DirectionsPage /> },
         ],
       },
       // About
@@ -76,7 +78,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<div>Loading Education...</div>}><EducationLayout /></Suspense>,
         children: [
           { path: 'toddler', element: <Suspense fallback={<div>Loading Toddler...</div>}><ToddlerPage /></Suspense> },
-          { path: 'elementary', element: <Suspense fallback={<div>Loading Elementary...</div>}><ElementaryPage /></Suspense> },
+          { path: 'elementary', element: <ElementaryPage /> },
           { path: 'youth', element: <Suspense fallback={<div>Loading Youth...</div>}><YouthPage /></Suspense> },
           { path: 'young-adult', element: <Suspense fallback={<div>Loading Young Adult...</div>}><YoungAdultPage /></Suspense> },
         ],
@@ -86,8 +88,8 @@ const router = createBrowserRouter([
         path: '/news',
         element: <Suspense fallback={<div>Loading News...</div>}><NewsLayout /></Suspense>,
         children: [
-          { path: 'church-news', element: <Suspense fallback={<div>Loading Church News...</div>}><ChurchNewsPage /></Suspense> },
-          { path: 'bulletin', element: <Suspense fallback={<div>Loading Bulletin...</div>}><BulletinPage /></Suspense> },
+          { path: 'church-news', element: <Suspense fallback={<div>Loading Church News...</div>}><BoardPage categoryId={2} title="교회 소식" /></Suspense> },
+          { path: 'bulletin', element: <Suspense fallback={<div>Loading Bulletin...</div>}><BoardPage categoryId={1} title="주보" /></Suspense> },
           { path: 'album', element: <Suspense fallback={<div>Loading Album...</div>}><AlbumPage /></Suspense> },
           { path: 'free-board', element: <Suspense fallback={<div>Loading Free Board...</div>}><FreeBoardPage /></Suspense> },
         ],

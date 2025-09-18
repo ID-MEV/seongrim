@@ -1,9 +1,11 @@
 import React from 'react';
 import styles from './Layout.module.css';
+import FadeIn from '../../components/FadeIn';
 
 const GreetingsPage = () => {
   return (
     <div className={styles.pageContainer}>
+      <FadeIn>
       <h1 className={styles.title}>인사말</h1>
       <div className={styles.content}>
         <p>
@@ -23,6 +25,7 @@ const GreetingsPage = () => {
           <strong>성림교회 담임목사 김사랑 드림</strong>
         </p>
       </div>
+      </FadeIn>
     </div>
   );
 };

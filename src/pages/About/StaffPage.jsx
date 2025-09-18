@@ -1,4 +1,5 @@
 import React from 'react';
+import FadeIn from '../../components/FadeIn';
 import styles from './Layout.module.css';
 
 // 가상의 이미지 URL
@@ -52,23 +53,25 @@ const staffMembers = [
 const StaffPage = () => {
   return (
     <div className={styles.pageContainer}>
-      <h1 className={styles.title}>섬기는 사람들</h1>
-      <div className={styles.content}>
-        <p>성림교회는 성도들을 사랑으로 섬기는 교역자들과 직분자들이 함께 동역하고 있습니다.</p>
-        
-        <div className={styles.staffGrid}>
-          {staffMembers.map((staff, index) => (
-            <div key={index} className={styles.staffCard}>
-              <img src={staff.image} alt={`${staff.name} ${staff.role}`} className={styles.staffImage} />
-              <div className={styles.staffInfo}>
-                <h3>{staff.role}</h3>
-                <p>{staff.name}</p>
-                <p className={styles.staffDetails}>{staff.details}</p>
+      <FadeIn>
+        <h1 className={styles.title}>섬기는 사람들</h1>
+        <div className={styles.content}>
+          <p>성림교회는 성도들을 사랑으로 섬기는 교역자들과 직분자들이 함께 동역하고 있습니다.</p>
+          
+          <div className={styles.staffGrid}>
+            {staffMembers.map((staff, index) => (
+              <div key={index} className={styles.staffCard}>
+                <img src={staff.image} alt={`${staff.name} ${staff.role}`} className={styles.staffImage} />
+                <div className={styles.staffInfo}>
+                  <h3>{staff.role}</h3>
+                  <p>{staff.name}</p>
+                  <p className={styles.staffDetails}>{staff.details}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </FadeIn>
     </div>
   );
 };

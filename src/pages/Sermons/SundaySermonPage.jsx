@@ -18,7 +18,8 @@ const SundaySermonPage = () => {
   };
 
   // 주일설교 플레이리스트 ID (실제 YouTube 플레이리스트 ID로 교체 필요)
-  const sundaySermonPlaylistId = 'YOUR_SUNDAY_SERMON_PLAYLIST_ID'; 
+  // TODO: Replace with the actual YouTube playlist ID for Sunday Sermons
+  const sundaySermonPlaylistId = 'PLT8iueXeLMByUze1YAgfwgGVx1BRUOrwK'; 
 
   return (
     <div className={styles.pageContainer}>

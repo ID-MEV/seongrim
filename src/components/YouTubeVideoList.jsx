@@ -1,62 +1,67 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../pages/Sermons/Layout.module.css'; // 기존 스타일 재활용
+import axios from 'axios';
+import VideoModal from './VideoModal'; // 모달 컴포넌트 import
+import YouTubeVideoCard from './YouTubeVideoCard'; // 영상 카드 컴포넌트 import
 
-const YouTubeVideoList = ({ playlistId, onVideoClick }) => {
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const YouTubeVideoList = ({ playlistId }) => {
+    const [videos, setVideos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [selectedVideoUrl, setSelectedVideoUrl] = useState(null); // 선택된 영상 URL 상태
 
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/youtube-videos?playlistId=${playlistId}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        // position을 기준으로 정렬 (백엔드에서 정렬되어 온다고 가정하지만, 혹시 몰라 클라이언트에서도 정렬)
-        const sortedVideos = data.sort((a, b) => a.position - b.position);
-        setVideos(sortedVideos);
-      } catch (e) {
-        setError(e);
-      } finally {
-        setLoading(false);
-      }
+    useEffect(() => {
+        if (!playlistId) return;
+
+        const fetchVideos = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+                // API 주소를 실제 운영 주소로 변경해야 할 수 있습니다.
+                const response = await axios.get(`${import.meta.env.VITE_YOUTUBE_API_BASE_URL}/api/youtube-videos?playlistId=${playlistId}`);
+                setVideos(Array.isArray(response.data) ? response.data : []);
+            } catch (err) {
+                setError('영상 목록을 불러오는 데 실패했습니다.');
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchVideos();
+    }, [playlistId]);
+
+    const handleVideoClick = (url) => {
+        setSelectedVideoUrl(url);
     };
 
-    if (playlistId) {
-      fetchVideos();
+    const handleCloseModal = () => {
+        setSelectedVideoUrl(null);
+    };
+
+    if (loading) {
+        return <div>로딩 중...</div>;
     }
-  }, [playlistId]);
 
-  if (loading) {
-    return <div className={styles.loading}>영상을 불러오는 중입니다...</div>;
-  }
+    if (error) {
+        return <div>{error}</div>;
+    }
 
-  if (error) {
-    return <div className={styles.error}>영상을 불러오는데 실패했습니다: {error.message}</div>;
-  }
+    if (videos.length === 0) {
+        return <div>영상이 없습니다.</div>;
+    }
 
-  return (
-    <div className={styles.sermonList}>
-      {videos.map((video) => (
-        <div 
-          key={video.video_id} 
-          className={styles.sermonCard} 
-          onClick={() => onVideoClick(`https://www.youtube.com/embed/${video.video_id}`)}
-        >
-          <div className={styles.sermonVideo}>
-            <img src={video.thumbnail_url} alt={video.title} />
-          </div>
-          <div className={styles.sermonInfo}>
-            <h3>{video.title}</h3>
-            <p><strong>게시일:</strong> {new Date(video.published_at).toLocaleDateString()}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+    return (
+        <>
+            <div className="video-list-container">
+                <div className="video-cards-grid">
+                    {videos.map((video, index) => (
+                        <YouTubeVideoCard key={index} video={video} onClick={handleVideoClick} />
+                    ))}
+                </div>
+            </div>
+            <VideoModal videoUrl={selectedVideoUrl} onClose={handleCloseModal} />
+        </>
+    );
 };
 
 export default YouTubeVideoList;
