@@ -7,37 +7,3 @@
 .content {
   width: 100%;
 }
-
-/* Mobile Navigation Toggle Button */
-.navToggle {
-  display: none; /* 기본적으로 숨김 */
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1100;
-  background: #333;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 24px;
-}
-
-/* Backdrop for when the side nav is open */
-.backdrop {
-  display: none; /* 기본적으로 숨김 */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999; /* Below the side nav but above everything else */
-}
-
-@media (max-width: 768px) {
-  .navToggle, .backdrop {
-    display: block; /* 모바일에서 표시 */
-  }
-}

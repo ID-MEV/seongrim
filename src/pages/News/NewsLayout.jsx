@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import SideNav from '../../components/SideNav/SideNav';
 import styles from './Layout.module.css';
@@ -11,19 +11,9 @@ const newsLinks = [
 ];
 
 const NewsLayout = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false);
-
-  const toggleNav = () => {
-    setIsNavOpen(!isNavOpen);
-  };
-
   return (
     <>
-      <button className={styles.navToggle} onClick={toggleNav}>
-        ☰
-      </button>
-      {isNavOpen && <div className={styles.backdrop} onClick={toggleNav}></div>}
-      <SideNav title="교회소식" links={newsLinks} isOpen={isNavOpen} />
+      <SideNav title="교회소식" links={newsLinks} isOpen={false} />
       <div className={styles.layoutContainer}>
         <main className={styles.content}>
           <Outlet />
