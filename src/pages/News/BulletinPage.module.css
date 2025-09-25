@@ -1,7 +1,14 @@
 /* BulletinPage.module.css */
+.pageContainer {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .bulletinContainer {
   display: flex;
   gap: 20px;
+  min-height: 80vh; /* 최소 높이를 설정하여 컨테이너가 보이도록 함 */
 }
 
 .viewerContainer {
@@ -12,7 +19,14 @@
   justify-content: center;
   border: 1px solid #ddd;
   padding: 20px;
-  min-height: 80vh; /* 최소 높이를 설정하여 컨테이너가 보이도록 함 */
+  background-color: #f9f9f9;
+}
+
+.bulletinImage {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .listContainer {
@@ -21,9 +35,58 @@
   padding: 10px;
   max-height: 80vh; /* 목록이 너무 길어지면 스크롤 생성 */
   overflow-y: auto;
+  background-color: #f9f9f9;
 }
 
 .noSelection {
   font-size: 1.2rem;
   color: #888;
+  text-align: center;
+}
+
+.loadingContainer,
+.errorContainer,
+.noDataContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.spinner {
+  font-size: 3rem;
+  color: var(--primary-color);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .bulletinContainer {
+    flex-direction: column;
+  }
+
+  .viewerContainer,
+  .listContainer {
+    flex: none;
+    width: 100%;
+    max-height: none;
+    min-height: auto;
+  }
+
+  .listContainer {
+    order: 1; /* 모바일에서 목록을 먼저 보여주기 */
+  }
+
+  .viewerContainer {
+    order: 2;
+  }
 }

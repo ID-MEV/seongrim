@@ -8,9 +8,18 @@
   border: 1px solid #ddd;
   padding: 20px;
   min-height: 80vh;
+  background-color: #f9f9f9;
 }
 
 .noSelection {
   font-size: 1.2rem;
   color: #888;
+  text-align: center;
+}
+
+.bulletinImage {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

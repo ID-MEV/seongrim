@@ -7,7 +7,7 @@
   justify-content: center;
   text-align: center;
   color: var(--white-color);
-  background: url('https://api.seongrim.o-r.kr/wp-content/uploads/2025/08/bg-church-1993645_1920.jpg') no-repeat center center/cover;
+  background: url('https://cdn.pixabay.com/photo/2020/01/08/18/50/clouds-4750959_1280.jpg') no-repeat center center/cover;
 }
 
 .heroOverlay {
@@ -40,7 +40,7 @@
 
 .description {
   font-size: 1.2rem;
-  max-width: 600px;
+  max-width: 1000px;
   margin: 0 auto 2rem;
   font-weight: 300;
 }

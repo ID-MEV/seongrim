@@ -1,16 +1,17 @@
 import axios from 'axios';
 
-const WORDPRESS_API_URL = import.meta.env.VITE_WORDPRESS_API_URL; // Assuming Vite for env variables
+const WORDPRESS_API_URL = import.meta.env.VITE_API_URL; // Assuming Vite for env variables
 
 export const getPostsByCategory = async (categoryId, page = 1, perPage = 10) => {
   try {
     const response = await axios.get(
-      `${WORDPRESS_API_URL}/wp-json/wp/v2/posts`,
+      `${WORDPRESS_API_URL}/wp/v2/posts`,
       {
         params: {
           categories: categoryId,
           page: page,
           per_page: perPage,
+          _fields: 'id,title,date,content', // Fetch id, title, date, and content
         },
       }
     );
@@ -22,6 +23,18 @@ export const getPostsByCategory = async (categoryId, page = 1, perPage = 10) => 
     console.error(`Error fetching posts for category ${categoryId}:`, error);
     throw error;
   }
+};
+
+/**
+ * Extracts the first image URL from an HTML string.
+ * @param {string} htmlString - The HTML string to parse.
+ * @returns {string|null} The URL of the first image found, or null if no image is found.
+ */
+export const extractImageUrlFromHtml = (htmlString) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+  const imgTag = doc.querySelector('img');
+  return imgTag ? imgTag.src : null;
 };
 
 // TODO: Replace with the actual category ID for '앨범' posts
