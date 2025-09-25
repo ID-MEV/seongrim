@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './BulletinList.module.css';
-import Pagination from '../../components/news/Pagination'; // Pagination 컴포넌트 임포트
+import Pagination from '@/components/news/Pagination.jsx'; // Pagination 컴포넌트 임포트
 
 const BulletinList = ({
   bulletins,

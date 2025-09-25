@@ -29,6 +29,7 @@ import ElementaryPage from './pages/Education/ElementaryPage.jsx';
 const YouthPage = lazy(() => import('./pages/Education/YouthPage.jsx'));
 const YoungAdultPage = lazy(() => import('./pages/Education/YoungAdultPage.jsx'));
 
+const BulletinPage = lazy(() => import('./pages/News/BulletinPage.jsx'));
 const BoardPage = lazy(() => import('./pages/News/BoardPage.jsx'));
 const FreeBoardPage = lazy(() => import('./pages/News/FreeBoardPage.jsx'));
 
@@ -89,7 +90,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<div>Loading News...</div>}><NewsLayout /></Suspense>,
         children: [
           { path: 'church-news', element: <Suspense fallback={<div>Loading Church News...</div>}><BoardPage categoryId={2} title="교회 소식" /></Suspense> },
-          { path: 'bulletin', element: <Suspense fallback={<div>Loading Bulletin...</div>}><BoardPage categoryId={1} title="주보" /></Suspense> },
+          { path: 'bulletin', element: <Suspense fallback={<div>Loading Bulletin...</div>}><BulletinPage /></Suspense> },
           { path: 'album', element: <Suspense fallback={<div>Loading Album...</div>}><AlbumPage /></Suspense> },
           { path: 'free-board', element: <Suspense fallback={<div>Loading Free Board...</div>}><FreeBoardPage /></Suspense> },
         ],
