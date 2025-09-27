@@ -12,9 +12,6 @@ const HeroSection = () => {
         <p className={styles.description}>
           "수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라" (마11:28)
         </p>
-        <button className={styles.ctaButton}>
-          새가족 등록 안내 <FaArrowRight className={styles.ctaIcon} />
-        </button>
       </div>
     </section>
   );

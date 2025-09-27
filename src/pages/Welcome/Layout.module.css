@@ -7,3 +7,57 @@
 .content {
   width: 100%;
 }
+
+.separator {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 30px 0;
+}
+
+.headingWithSeparator {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.headingWithSeparator h3 {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.headingWithSeparator .separator {
+  width: 100%;
+  margin: 0;
+  border-top-width: 1px;
+}
+
+.bulletedList {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 0.95rem;
+}
+
+.table th,
+.table td {
+  border: 1px solid #e9ecef; /* A light, modern border color */
+  padding: 12px 15px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table thead th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+/* For rows with rowspan, align text to the middle */
+.table td[rowSpan] {
+  vertical-align: middle;
+}

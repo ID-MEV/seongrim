@@ -1,0 +1,70 @@
+.awcBaseLayer {
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  max-width: 1000px; /* 좌우 여백을 넓히기 위해 max-width를 1000px로 설정 */
+}
+
+.defaultDiv {
+  overflow: hidden;
+}
+
+.textGimhaeGaya {
+  font-family: 'GimhaeGaya', sans-serif;
+  letter-spacing: -1px;
+  line-height: 1.4;
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+}
+
+.textPretendard {
+  font-family: 'Pretendard', sans-serif;
+  letter-spacing: -1px;
+  line-height: 1.6;
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+}
+
+.greetingsContainer {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 40px auto;
+}
+
+.pastorImage {
+  flex-shrink: 0;
+}
+
+.pastorImage img {
+  width: 300px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #e0e0e0; /* Placeholder background */
+}
+
+.welcomeMessage {
+  flex-grow: 1;
+}
+
+.welcomeMessage h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  font-family: 'GimhaeGaya', sans-serif;
+}
+
+.welcomeMessage p {
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 15px;
+  color: #555;
+  font-family: 'Pretendard', sans-serif;
+}

@@ -10,6 +10,10 @@ const ServiceTimesPage = () => {
         <div className={styles.content}>
           <p>성림교회는 다음과 같이 예배를 드립니다. 은혜와 감격이 넘치는 예배에 여러분을 초대합니다.</p>
           
+          <div className={styles.headingWithSeparator} style={{marginTop: '40px'}}>
+            <h3>예배 및 기도회</h3>
+            <hr className={styles.separator} />
+          </div>
           <table className={styles.table}>
             <thead>
               <tr>
@@ -20,19 +24,12 @@ const ServiceTimesPage = () => {
             </thead>
             <tbody>
               <tr>
-                <td><strong>주일 1부 예배</strong></td>
-                <td>오전 9:00</td>
-                <td>본당</td>
+                <td rowSpan={2}><strong>주일예배</strong></td>
+                <td>1부: 오전 9:00</td>
+                <td rowSpan={2}>본당</td>
               </tr>
               <tr>
-                <td><strong>주일 2부 예배</strong></td>
-                <td>오전 11:00</td>
-                <td>본당</td>
-              </tr>
-              <tr>
-                <td><strong>주일학교 예배</strong></td>
-                <td>오전 11:00</td>
-                <td>교육관 각 부서실</td>
+                <td>2부: 오전 11:00</td>
               </tr>
               <tr>
                 <td><strong>수요예배</strong></td>
@@ -43,6 +40,27 @@ const ServiceTimesPage = () => {
                 <td><strong>새벽기도회</strong></td>
                 <td>오전 5:30 (화-토)</td>
                 <td>본당</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div className={styles.headingWithSeparator} style={{marginTop: '40px'}}>
+            <h3>교회학교</h3>
+            <hr className={styles.separator} />
+          </div>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>예배</th>
+                <th>시간</th>
+                <th>장소</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>주일학교 예배</strong></td>
+                <td>오전 11:00</td>
+                <td>교육관 각 부서실</td>
               </tr>
             </tbody>
           </table>
