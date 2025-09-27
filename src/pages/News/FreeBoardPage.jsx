@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import axios from 'axios';
+import { getPostsByCategory, getCategories } from '../../api/wordpress';
 import styles from './FreeBoard.module.css';
 import { FaSearch } from 'react-icons/fa';
 
-const REST_API_ENDPOINT = 'https://api.seongrim.o-r.kr/wp-json/wp/v2/posts';
-const CATEGORIES_ENDPOINT = 'https://api.seongrim.o-r.kr/wp-json/wp/v2/categories';
+const FREEBOARD_CATEGORY_ID = 2; // 자유게시판 카테고리 ID
 
 const FreeBoardPage = () => {
   const [posts, setPosts] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [allCategories, setAllCategories] = useState([]); // 모든 카테고리를 저장
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -24,11 +23,11 @@ const FreeBoardPage = () => {
       setLoading(true);
       try {
         const [postsRes, categoriesRes] = await Promise.all([
-          axios.get(`${REST_API_ENDPOINT}?categories=2`), // 자유게시판 카테고리(2) 글만 가져옴
-          axios.get(CATEGORIES_ENDPOINT)
+          getPostsByCategory(FREEBOARD_CATEGORY_ID), // 자유게시판 카테고리(2) 글만 가져옴
+          getCategories()
         ]);
-        setPosts(postsRes.data);
-        setCategories(categoriesRes.data.filter(cat => cat.id === 2)); // 자유게시판 카테고리만 필터
+        setPosts(postsRes.posts);
+        setAllCategories(categoriesRes.filter(cat => cat.id === FREEBOARD_CATEGORY_ID)); // 자유게시판 카테고리만 필터
         setError(null);
       } catch (err) {
         setError(err.message || '데이터를 불러오는 중 알 수 없는 에러가 발생했습니다.');
@@ -74,7 +73,7 @@ const FreeBoardPage = () => {
 
       <ul className={styles.categoryFilters}>
         <li className={!activeCategory ? styles.active : ''} onClick={() => setActiveCategory(null)}>전체</li>
-        {categories.map(cat => (
+        {allCategories.map(cat => (
           <li key={cat.id} className={activeCategory === cat.id ? styles.active : ''} onClick={() => setActiveCategory(cat.id)}>
             {cat.name}
           </li>

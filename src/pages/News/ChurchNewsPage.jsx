@@ -1,70 +1,128 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { getPostsByCategory, getCategories } from '../../api/wordpress';
 import styles from './ChurchNewsPage.module.css';
+import { FaSearch } from 'react-icons/fa';
 
-// 가상의 교회소식 데이터 (이미지 포함)
-const newsItems = [
-  {
-    id: 1,
-    category: '행사',
-    title: '창립 50주년 기념 음악회',
-    date: '2024-09-01',
-    imageUrl: 'https://via.placeholder.com/400x250/FFC107/808080?Text=Concert',
-  },
-  {
-    id: 2,
-    category: '선교',
-    title: '2024 여름 단기선교 (멕시코)',
-    date: '2024-07-20',
-    imageUrl: 'https://via.placeholder.com/400x250/28A745/FFFFFF?Text=Mission',
-  },
-  {
-    id: 3,
-    category: '교육',
-    title: '여름성경학교(VBS) 스케치',
-    date: '2024-06-30',
-    imageUrl: 'https://via.placeholder.com/400x250/17A2B8/FFFFFF?Text=VBS',
-  },
-  {
-    id: 4,
-    category: '행사',
-    title: '전교인 봄 야유회',
-    date: '2024-05-25',
-    imageUrl: 'https://via.placeholder.com/400x250/DC3545/FFFFFF?Text=Picnic',
-  },
-  {
-    id: 5,
-    category: '예배',
-    title: '부활주일 칸타타',
-    date: '2024-03-31',
-    imageUrl: 'https://via.placeholder.com/400x250/6F42C1/FFFFFF?Text=Easter',
-  },
-  {
-    id: 6,
-    category: '봉사',
-    title: '지역사회 클린업 캠페인',
-    date: '2024-02-18',
-    imageUrl: 'https://via.placeholder.com/400x250/FD7E14/FFFFFF?Text=Service',
-  },
-];
+const CHURCH_NEWS_CATEGORY_ID = 6; // 교회 소식 카테고리 ID
 
 const ChurchNewsPage = () => {
+  const [posts, setPosts] = useState([]);
+  const [allCategories, setAllCategories] = useState([]); // 모든 카테고리를 저장
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [sortOrder, setSortOrder] = useState('latest');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  const postsPerPage = 10;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [postsRes, categoriesRes] = await Promise.all([
+          getPostsByCategory(CHURCH_NEWS_CATEGORY_ID), // 교회 소식 카테고리 글만 가져옴
+          getCategories()
+        ]);
+        setPosts(postsRes.posts);
+        setAllCategories(categoriesRes.filter(cat => cat.id === CHURCH_NEWS_CATEGORY_ID)); // 교회 소식 카테고리만 필터
+        setError(null);
+      } catch (err) {
+        setError(err.message || '데이터를 불러오는 중 알 수 없는 에러가 발생했습니다.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const filteredAndSortedPosts = useMemo(() => {
+    let filtered = activeCategory 
+      ? posts.filter(post => post.categories.includes(activeCategory))
+      : posts;
+
+    let sorted = [...filtered];
+    if (sortOrder === 'latest') {
+      sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (sortOrder === 'oldest') {
+      sorted.sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+    return sorted;
+  }, [posts, activeCategory, sortOrder]);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = filteredAndSortedPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(filteredAndSortedPosts.length / postsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
-    <div className={styles.pageContainer}>
-      <h1 className={styles.title}>교회 소식</h1>
-      <p className={styles.introText}>성림교회의 다양한 소식과 행사들을 사진과 함께 만나보세요.</p>
+    <div className={styles.boardContainer}>
+      <h2 className={styles.boardTitle}>교회 소식</h2>
       
-      <div className={styles.galleryGrid}>
-        {newsItems.map((item) => (
-          <div key={item.id} className={styles.galleryCard}>
-            <img src={item.imageUrl} alt={item.title} className={styles.cardImage} />
-            <div className={styles.cardContent}>
-              <span className={styles.cardCategory}>{item.category}</span>
-              <h2 className={styles.cardTitle}>{item.title}</h2>
-              <p className={styles.cardDate}>{item.date}</p>
-            </div>
-          </div>
+      <div className={styles.controlsHeader}>
+        <span className={styles.postCount}>전체 {filteredAndSortedPosts.length}</span>
+        <select className={styles.sortFilter} value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+          <option value="latest">최신순</option>
+          <option value="oldest">오래된 순</option>
+        </select>
+      </div>
+
+      <ul className={styles.categoryFilters}>
+        <li className={!activeCategory ? styles.active : ''} onClick={() => setActiveCategory(null)}>전체</li>
+        {allCategories.map(cat => (
+          <li key={cat.id} className={activeCategory === cat.id ? styles.active : ''} onClick={() => setActiveCategory(cat.id)}>
+            {cat.name}
+          </li>
+        ))}
+      </ul>
+
+      <table className={styles.boardTable}>
+        <thead>
+          <tr>
+            <th className={styles.thNumber}>번호</th>
+            <th className={styles.thTitle}>제목</th>
+            <th className={styles.thAuthor}>작성자</th>
+            <th className={styles.thDate}>작성일</th>
+            <th className={styles.thViews}>조회</th>
+          </tr>
+        </thead>
+        <tbody>
+          {loading ? (
+            <tr><td colSpan="5" className={styles.loading}>게시글을 불러오는 중입니다...</td></tr>
+          ) : error ? (
+            <tr><td colSpan="5" className={styles.error}>에러: {error}</td></tr>
+          ) : currentPosts.length > 0 ? (
+            currentPosts.map((post, index) => (
+              <tr key={post.id}>
+                <td>{filteredAndSortedPosts.length - (indexOfFirstPost + index)}</td>
+                <td className={styles.tdTitle}>{post.title.rendered}</td>
+                <td>관리자</td>
+                <td>{new Date(post.date).toLocaleDateString()}</td>
+                <td>-</td>
+              </tr>
+            ))
+          ) : (
+            <tr><td colSpan="5">게시글이 없습니다.</td></tr>
+          )}
+        </tbody>
+      </table>
+
+      <div className={styles.pagination}>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
+          <button key={number} onClick={() => paginate(number)} className={currentPage === number ? styles.activePage : ''}>
+            {number}
+          </button>
         ))}
       </div>
+
+      <form className={styles.searchForm}>
+        <input type="text" placeholder="검색어를 입력하세요" className={styles.searchInput} />
+        <button type="submit" className={styles.searchButton}><FaSearch /></button>
+      </form>
     </div>
   );
 };

@@ -1,69 +1,161 @@
-.pageContainer {
+.boardContainer {
+  max-width: 1000px;
+  margin: 2rem auto;
   padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
-.title {
-  text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2.5rem;
+.boardTitle {
+  font-size: 1.8rem;
+  font-weight: 600;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #333;
+}
+
+.controlsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.postCount {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.sortFilter {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.9rem;
+  background-color: #fff;
+}
+
+.categoryFilters {
+  display: flex;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  background-color: #f8f9fa;
+}
+
+.categoryFilters li {
+  padding: 0.8rem 1.5rem;
+  border-right: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #555;
+  transition: background-color 0.2s;
+}
+
+.categoryFilters li:last-child {
+  border-right: none;
+}
+
+.categoryFilters li:hover {
+  background-color: #fff;
+}
+
+.categoryFilters li.active {
+  background-color: #fff;
+  border-bottom: 2px solid var(--primary-color);
+  margin-bottom: -1px;
+  font-weight: 500;
   color: #333;
 }
 
-.introText {
-  text-align: center;
-  margin-bottom: 3rem;
-  font-size: 1.1rem;
-  color: #666;
-}
-
-.galleryGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.galleryCard {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease-in-out;
-}
-
-.galleryCard:hover {
-  transform: translateY(-5px);
-}
-
-.cardImage {
+.boardTable {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  background-color: #eee;
+  border-collapse: collapse;
+  text-align: center;
+  border-top: 2px solid #333;
 }
 
-.cardContent {
-  padding: 1rem;
+.boardTable th, .boardTable td {
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid #eee;
 }
 
-.cardCategory {
-  display: inline-block;
-  background-color: #007bff;
-  color: white;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  margin-bottom: 0.5rem;
+.boardTable th {
+  background-color: #f8f9fa;
+  font-weight: 500;
+  color: #333;
 }
 
-.cardTitle {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+.thNumber { width: 8%; }
+.thTitle { width: auto; }
+.thAuthor { width: 12%; }
+.thDate { width: 15%; }
+.thViews { width: 10%; }
+
+.tdTitle {
+  text-align: left;
+  padding-left: 1rem;
+  cursor: pointer;
+  color: #333;
+}
+.tdTitle:hover {
+  text-decoration: underline;
 }
 
-.cardDate {
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  margin: 2.5rem 0;
+}
+
+.pagination button {
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #555;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
   font-size: 0.9rem;
-  color: #888;
+}
+
+.pagination button:hover {
+  background-color: #f8f9fa;
+}
+
+.pagination .activePage {
+  background-color: #555;
+  color: white;
+  border-color: #555;
+}
+
+.searchForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+}
+
+.searchInput {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 300px;
+  font-size: 1rem;
+}
+
+.searchButton {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  background-color: #555;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.loading, .error {
+  padding: 5rem;
+  font-size: 1.1rem;
+  color: #777;
 }

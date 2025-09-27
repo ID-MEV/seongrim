@@ -37,6 +37,16 @@ export const extractImageUrlFromHtml = (htmlString) => {
   return imgTag ? imgTag.src : null;
 };
 
+export const getCategories = async () => {
+  try {
+    const response = await axios.get(`${WORDPRESS_API_URL}/wp/v2/categories`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw error;
+  }
+};
+
 // TODO: Replace with the actual category ID for '앨범' posts
 const ALBUM_CATEGORY_ID = 123; // Placeholder for album category ID
 
