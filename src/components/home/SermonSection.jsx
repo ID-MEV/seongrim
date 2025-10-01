@@ -1,60 +1,118 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './SermonSection.module.css';
 import { FaPlayCircle } from 'react-icons/fa';
+import { getLatestSermons } from '../../api/sermonApi';
+import VideoModal from '../../components/VideoModal';
 
 const SermonSection = () => {
-  const sermons = [
-    {
-      id: 1,
-      title: '참된 평안을 누리는 삶',
-      preacher: '홍길동 목사',
-      date: '2024년 7월 21일',
-      scripture: '요한복음 14:27',
-      thumbnail: 'https://images.unsplash.com/photo-1593696559764-261649c44316?q=80&w=400&auto=format&fit=crop'
-    },
-    {
-      id: 2,
-      title: '믿음의 경주를 완주하라',
-      preacher: '홍길동 목사',
-      date: '2024년 7월 14일',
-      scripture: '디모데후서 4:7',
-      thumbnail: 'https://images.unsplash.com/photo-1604162743941-4458fac61f1c?q=80&w=400&auto=format&fit=crop'
-    },
-    {
-      id: 3,
-      title: '세상의 빛과 소금',
-      preacher: '김철수 부목사',
-      date: '2024년 7월 7일',
-      scripture: '마태복음 5:13-16',
-      thumbnail: 'https://images.unsplash.com/photo-1508427953056-b6b0de8d2333?q=80&w=400&auto=format&fit=crop'
-    }
-  ];
+  const [sermons, setSermons] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentVideoUrl, setCurrentVideoUrl] = useState('');
+  const navigate = useNavigate();
+
+  const handleVideoClick = (videoUrl) => {
+    setCurrentVideoUrl(videoUrl);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setCurrentVideoUrl('');
+  };
+
+  useEffect(() => {
+    const fetchSermons = async () => {
+      try {
+        setLoading(true);
+        const data = await getLatestSermons();
+        setSermons(data);
+      } catch (err) {
+        setError('Failed to fetch sermons.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSermons();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className={styles.sermonSection}>
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>최신 설교 말씀</h2>
+          <p>설교 영상을 불러오는 중...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className={styles.sermonSection}>
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>최신 설교 말씀</h2>
+          <p className={styles.errorText}>{error}</p>
+        </div>
+      </section>
+    );
+  }
+
+  // Function to parse sermon title
+  const parseSermonTitle = (fullTitle) => {
+    const parts = fullTitle.split(' | ').map(part => part.trim());
+    // Expected format: "YYYY-MM-DD | Sermon Type | Sermon Title | Preacher Name | Church Name"
+    const date = parts[0] || '';
+    const sermonType = parts[1] || '';
+    const sermonTitle = parts[2] || '';
+    const preacher = parts[3] || '';
+
+    return { date, sermonType, sermonTitle, preacher };
+  };
 
   return (
     <section className={styles.sermonSection}>
       <div className={styles.container}>
         <h2 className={styles.sectionTitle}>최신 설교 말씀</h2>
         <div className={styles.sermonGrid}>
-          {sermons.map(sermon => (
-            <div key={sermon.id} className={styles.sermonCard}>
-              <div className={styles.thumbnail}>
-                <img src={sermon.thumbnail} alt={sermon.title} />
-                <div className={styles.overlay}>
-                  <FaPlayCircle className={styles.playIcon} />
+          {sermons.map(sermon => {
+            const { date, sermonType, sermonTitle, preacher } = parseSermonTitle(sermon.title);
+            return (
+              <div 
+                key={sermon.videoId} 
+                className={styles.sermonCard}
+                onClick={() => handleVideoClick(sermon.url)}
+                role="button"
+                tabIndex="0"
+              >
+                <div className={styles.thumbnail}>
+                  <img src={sermon.thumbnail} alt={sermonTitle} />
+                  <div className={styles.overlay}>
+                    <FaPlayCircle className={styles.playIcon} />
+                  </div>
+                </div>
+                <div className={styles.cardContent}>
+                  <h3 className={styles.sermonTitle}>{sermonTitle}</h3>
+                  <p className={styles.sermonInfo}>{preacher} | {date}</p>
+                  <p className={styles.sermonType}>{sermonType}</p>
                 </div>
               </div>
-              <div className={styles.cardContent}>
-                <h3 className={styles.sermonTitle}>{sermon.title}</h3>
-                <p className={styles.sermonInfo}>{sermon.preacher} | {sermon.date}</p>
-                <p className={styles.sermonScripture}>{sermon.scripture}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <div className={styles.moreButtonContainer}>
-          <button className={styles.moreButton}>설교 전체보기</button>
+          <button className={styles.moreButton} onClick={() => navigate('/sermons/sunday')}>설교 전체보기</button>
         </div>
       </div>
+      <VideoModal 
+        isOpen={isModalOpen} 
+        videoUrl={currentVideoUrl} 
+        onClose={handleCloseModal} 
+      />
     </section>
   );
 };
