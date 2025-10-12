@@ -10,12 +10,12 @@ const Footer = () => {
         <div className={styles.churchInfo}>
           <h3 className={styles.logo}>광주성림교회</h3>
           <p>담임목사: 안성주</p>
-          <p>(12345) 서울특별시 성림구 성림로 123</p>
-          <p>전화: 02-1234-5678 | 팩스: 02-1234-5679</p>
+          <p>(61914) 광주광역시 서구 죽봉대로119번길 8-1</p>
+          <p>전화: 062)366-0691 | 팩스: 062)361-0847</p>
         </div>
       </div>
       <div className={styles.copyright}>
-        <p>Copyright &copy; 2025 성림교회. All Rights Reserved.</p>
+        <p>Copyright &copy; 2025 광주성림교회. All Rights Reserved. Designed by Team Nehemiah</p>
       </div>
     </footer>
   );
