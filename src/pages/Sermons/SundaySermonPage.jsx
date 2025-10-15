@@ -23,7 +23,7 @@ const SundaySermonPage = () => {
 
   return (
     <div className={styles.pageContainer}>
-      <h1 className={styles.title}>주일 설교</h1>
+      <h1 className={styles.title}>주일 오전 예배</h1>
       <div className={styles.content}>
         <p>매주 선포되는 생명의 말씀을 통해 삶의 지혜와 능력을 얻으시길 바랍니다.</p>
         

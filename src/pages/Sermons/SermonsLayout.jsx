@@ -4,7 +4,7 @@ import SideNav from '../../components/SideNav/SideNav';
 import styles from './Layout.module.css';
 
 const sermonLinks = [
-  { path: '/sermons/sunday', label: '주일설교' },
+  { path: '/sermons/sunday', label: '주일 오전 예배' },
   { path: '/sermons/choir', label: '찬양대' },
   { path: '/sermons/special-praise', label: '특별찬양' },
 ];
