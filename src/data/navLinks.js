@@ -20,6 +20,9 @@ const navLinks = [
     title: '말씀/찬양',
     sublinks: [
       { title: '주일설교', path: '/sermons/sunday' },
+      { title: '주일 오후 예배', path: '/sermons/sunday-afternoon' },
+      { title: '수요예배', path: '/sermons/wednesday' },
+      { title: '새벽예배', path: '/sermons/dawn' },
       { title: '찬양대', path: '/sermons/choir' },
       { title: '특별찬양', path: '/sermons/special-praise' },
     ],

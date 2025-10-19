@@ -24,6 +24,9 @@ const HistoryPage = lazy(() => import('./pages/About/HistoryPage.jsx'));
 const SundaySermonPage = lazy(() => import('./pages/Sermons/SundaySermonPage.jsx'));
 const ChoirPage = lazy(() => import('./pages/Sermons/ChoirPage.jsx'));
 const SpecialPraisePage = lazy(() => import('./pages/Sermons/SpecialPraisePage.jsx'));
+const SundayAfternoonSermonPage = lazy(() => import('./pages/Sermons/SundayAfternoonSermonPage.jsx'));
+const WednesdaySermonPage = lazy(() => import('./pages/Sermons/WednesdaySermonPage.jsx'));
+const DawnSermonPage = lazy(() => import('./pages/Sermons/DawnSermonPage.jsx'));
 const ToddlerPage = lazy(() => import('./pages/Education/ToddlerPage.jsx'));
 import ElementaryPage from './pages/Education/ElementaryPage.jsx';
 const YouthPage = lazy(() => import('./pages/Education/YouthPage.jsx'));
@@ -69,6 +72,9 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<div>Loading Sermons...</div>}><SermonsLayout /></Suspense>,
         children: [
           { path: 'sunday', element: <Suspense fallback={<div>Loading Sunday Sermon...</div>}><SundaySermonPage /></Suspense> },
+          { path: 'sunday-afternoon', element: <Suspense fallback={<div>Loading Sunday Afternoon Sermon...</div>}><SundayAfternoonSermonPage /></Suspense> },
+          { path: 'wednesday', element: <Suspense fallback={<div>Loading Wednesday Sermon...</div>}><WednesdaySermonPage /></Suspense> },
+          { path: 'dawn', element: <Suspense fallback={<div>Loading Dawn Sermon...</div>}><DawnSermonPage /></Suspense> },
           { path: 'choir', element: <Suspense fallback={<div>Loading Choir...</div>}><ChoirPage /></Suspense> },
           { path: 'special-praise', element: <Suspense fallback={<div>Loading Special Praise...</div>}><SpecialPraisePage /></Suspense> },
         ],
