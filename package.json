@@ -39,7 +39,8 @@
       "/news/free-board"
     ],
     "puppeteer": {
-      "headless": "new"
+      "headless": "new",
+      "timeout": 60000
     },
     "skipThirdPartyRequests": true,
     "fixWebpackChunks": false,
