@@ -7,6 +7,9 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
+        <div className={styles.footerImage}>
+          <img src="https://api.seongrim.o-r.kr/wp-content/uploads/2025/08/Footer.png" alt="Footer Image" />
+        </div>
         <div className={styles.churchInfo}>
           <h3 className={styles.logo}>광주성림교회</h3>
           <p>담임목사: 안성주</p>

@@ -7,9 +7,9 @@
 .footerContent {
   max-width: 1280px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  display: flex;
+  align-items: center; /* Keep items vertically centered */
+  gap: 2rem; /* Space between image and text */
   padding-bottom: 2rem;
   border-bottom: 1px solid #465a70;
 }
@@ -67,4 +67,11 @@
   padding-top: 2rem;
   font-size: 0.85rem;
   color: #95a5a6;
+}
+
+.footerImage img {
+  max-width: 300px; /* Limit maximum width */
+  width: 100%; /* Make it responsive */
+  height: auto;
+  display: block;
 }
