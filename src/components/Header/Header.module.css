@@ -155,13 +155,14 @@
   .nav {
     display: none;
     position: absolute;
-    top: 70px;
+    top: calc(80px + 1rem); /* Adjusted to account for topBar padding (2 * 0.5rem) */
     left: 0;
     width: 100%;
     background-color: var(--white-color);
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
     overflow-y: auto; /* Enable scrolling for long menus */
-    max-height: calc(100vh - 70px); /* Limit height to viewport */
+    max-height: calc(100vh - (80px + 1rem)); /* Limit height to viewport, adjusted */
+    border-radius: 8px; /* Added for rounded corners to the mobile menu */
   }
   .nav.active {
     display: block;
@@ -206,6 +207,12 @@
     opacity: 1;
     visibility: visible;
     transform: none;
+  }
+  .nav.active .menuItem > a {
+    color: var(--text-color); /* Change text color to a dark color on mobile when menu is active */
+  }
+  .nav.active .submenu li a {
+    color: var(--text-color); /* Also ensure submenu items are visible */
   }
   .menuToggle {
     display: block;

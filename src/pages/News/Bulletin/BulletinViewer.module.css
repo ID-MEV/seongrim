@@ -4,11 +4,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   border: 1px solid #ddd;
-  padding: 20px;
-  min-height: 80vh;
+  padding: 20px; /* Keep base padding */
+  min-height: auto;
+  padding-top: 20px;
+  padding-bottom: 10px; /* Reduced bottom padding */
   background-color: #f9f9f9;
+  box-sizing: border-box;
 }
 
 .noSelection {
