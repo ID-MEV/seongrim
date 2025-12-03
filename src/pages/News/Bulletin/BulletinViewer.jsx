@@ -1,11 +1,16 @@
 import React from 'react';
 import styles from './BulletinViewer.module.css';
 
-const BulletinViewer = ({ bulletin }) => {
+const BulletinViewer = ({ bulletin, onOpenImageModal }) => {
   return (
     <div className={styles.viewerContainer}>
       {bulletin && bulletin.imageUrl ? (
-        <img src={bulletin.imageUrl} alt={bulletin.title} className={styles.bulletinImage} />
+        <img
+          src={bulletin.imageUrl}
+          alt={bulletin.title}
+          className={styles.bulletinImage}
+          onClick={() => onOpenImageModal(bulletin.imageUrl)} // Call modal on image click
+        />
       ) : (
         <p className={styles.noSelection}>오른쪽 목록에서 주보를 선택하세요.</p>
       )}

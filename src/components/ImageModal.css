@@ -1,0 +1,46 @@
+/* ImageModal.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content.image-modal-content {
+    position: relative;
+    background-color: #000; /* Can be changed if needed */
+    padding: 0;
+    border-radius: 8px;
+    width: 95%; /* Adjust width for images */
+    max-width: 1200px; /* Max width for images */
+    max-height: 95vh; /* Max height for images */
+    aspect-ratio: 2 / 1; /* Set aspect ratio to match bulletin image (1008x504) */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    display: flex; /* Use flex to center image */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Ensure image fits within the modal content while maintaining aspect ratio */
+    border-radius: 8px; /* Match modal content border-radius */
+}
+
+.modal-close-button {
+    position: absolute;
+    top: -30px; /* Adjust as needed */
+    right: -10px; /* Adjust as needed */
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}

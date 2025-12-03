@@ -4,6 +4,7 @@ import Pagination from '@/components/news/Pagination.jsx'; // Pagination 컴포�
 
 const BulletinList = ({
   bulletins,
+  allFilteredBulletins,
   selectedBulletin,
   onSelectBulletin,
   availableYears,
@@ -17,7 +18,7 @@ const BulletinList = ({
     <div className={styles.listContainer}>
       <h3 className={styles.title}>주보 목록</h3>
 
-      {/* 연도 필터 */} 
+      {/* 연도 필터 */}
       <div className={styles.yearFilter}>
         <label htmlFor="year-select">연도 선택:</label>
         <select
@@ -35,22 +36,27 @@ const BulletinList = ({
 
       <ul className={styles.list}>
         {bulletins.length > 0 ? (
-          bulletins.map((bulletin, index) => (
-            <li
-              key={bulletin.id}
-              className={`${styles.listItem} ${selectedBulletin && selectedBulletin.id === bulletin.id ? styles.selected : ''}`}
-              onClick={() => onSelectBulletin(bulletin)}
-            >
-              <span className={styles.bulletinNumber}>{(currentPage - 1) * 16 + index + 1}.</span>
-              <span className={styles.bulletinTitle}>{bulletin.title}</span>
-            </li>
-          ))
+          bulletins.map((bulletin, index) => {
+            const overallFilteredIndex = allFilteredBulletins.indexOf(bulletin);
+            const displayChronologicalNumber = allFilteredBulletins.length - overallFilteredIndex; // This should give oldest=1, newest=N
+
+            return (
+              <li
+                key={bulletin.id}
+                className={`${styles.listItem} ${selectedBulletin && selectedBulletin.id === bulletin.id ? styles.selected : ''}`}
+                onClick={() => onSelectBulletin(bulletin)}
+              >
+                <span className={styles.bulletinNumber}>{displayChronologicalNumber}.</span>
+                <span className={styles.bulletinTitle}>{bulletin.title}</span>
+              </li>
+            );
+          })
         ) : (
           <li className={styles.noBulletins}>해당 연도의 주보가 없습니다.</li>
         )}
       </ul>
 
-      {/* 페이지네이션 */} 
+      {/* 페이지네이션 */}
       {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}

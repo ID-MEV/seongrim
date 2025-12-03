@@ -4,9 +4,10 @@ import BulletinViewer from './Bulletin/BulletinViewer';
 import styles from './BulletinPage.module.css';
 import { getPostsByCategory, extractImageUrlFromHtml } from '../../api/wordpress';
 import { FaSpinner } from 'react-icons/fa'; // 로딩 스피너 아이콘
+import ImageModal from '../../components/ImageModal'; // Import the new ImageModal component
 
 const BULLETIN_CATEGORY_ID = 5; // 주보 카테고리 ID
-const ITEMS_PER_PAGE = 16; // 한 페이지에 표시할 주보 개수
+const ITEMS_PER_PAGE = 5; // 한 페이지에 표시할 주보 개수
 
 const BulletinPage = () => {
   const [allBulletins, setAllBulletins] = useState([]);
@@ -15,6 +16,7 @@ const BulletinPage = () => {
   const [error, setError] = useState(null);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // 기본값: 현재 연도
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedBulletinImageUrl, setSelectedBulletinImageUrl] = useState(null); // New state for image modal
 
   useEffect(() => {
     const fetchBulletins = async () => {
@@ -82,6 +84,14 @@ const BulletinPage = () => {
     setCurrentPage(page);
   };
 
+  const handleOpenImageModal = (imageUrl) => {
+    setSelectedBulletinImageUrl(imageUrl);
+  };
+
+  const handleCloseImageModal = () => {
+    setSelectedBulletinImageUrl(null);
+  };
+
   return (
     <div className={styles.pageContainer}>
       <h1>주보 보기</h1>
@@ -98,13 +108,15 @@ const BulletinPage = () => {
       {!loading && !error && allBulletins.length > 0 && (
         <div className={styles.bulletinContainer}>
           <div className={styles.viewerContainer}>
-            <BulletinViewer bulletin={selectedBulletin} />
+            <BulletinViewer bulletin={selectedBulletin} onOpenImageModal={handleOpenImageModal} />
           </div>
           <div className={styles.listContainer}>
             <BulletinList
               bulletins={paginatedBulletins}
+              allFilteredBulletins={filteredBulletins}
               selectedBulletin={selectedBulletin}
               onSelectBulletin={handleSelectBulletin}
+              onSelectBulletinForModal={handleOpenImageModal} // Pass the handler
               availableYears={availableYears}
               selectedYear={selectedYear}
               onYearSelect={handleYearSelect}
@@ -115,6 +127,11 @@ const BulletinPage = () => {
           </div>
         </div>
       )}
+      {/* Conditionally render ImageModal */}
+      <ImageModal
+        imageUrl={selectedBulletinImageUrl}
+        onClose={handleCloseImageModal}
+      />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Pagination.module.css'; // Import CSS module
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pageNumbers = [];
@@ -8,12 +9,12 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
   return (
     <nav>
-      <ul className="pagination">
+      <ul className={styles.pagination}>
         {pageNumbers.map(number => (
-          <li key={number}>
+          <li key={number} className={styles.pageItem}>
             <button
               onClick={() => onPageChange(number)}
-              className={currentPage === number ? 'active' : ''}
+              className={`${styles.pageButton} ${currentPage === number ? styles.active : ''}`}
             >
               {number}
             </button>

@@ -47,6 +47,7 @@
   padding: 0;
   margin: 0;
   flex-grow: 1; /* 목록이 남은 공간을 채우도록 */
+  min-height: 270px; /* 5개 항목을 위한 최소 높이 설정 (5 * ~50px per item) */
 }
 
 .listItem {
