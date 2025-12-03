@@ -102,7 +102,7 @@ const Announcements = () => {
           <div className={styles.reportBox}>
             <p>{weeklyReport.title}</p>
             <span>{weeklyReport.date}</span>
-            <a href={weeklyReport.link} className={styles.reportLink}>바로가기</a>
+            <Link to={weeklyReport.link} className={styles.reportLink}>바로가기</Link>
           </div>
         </div>
       </div>
