@@ -31,10 +31,3 @@ node_modules/
 .vscode
 settins.json
 # OS specific
-
-*storybook.log
-storybook-static
-
-# Task files
-# tasks.json
-# tasks/ 
