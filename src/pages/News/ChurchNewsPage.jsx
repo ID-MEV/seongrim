@@ -15,6 +15,7 @@ const ChurchNewsPage = () => {
   const [sortOrder, setSortOrder] = useState('latest');
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedPost, setSelectedPost] = useState(null);
   
   const postsPerPage = 10;
 
@@ -40,7 +41,7 @@ const ChurchNewsPage = () => {
 
   const filteredAndSortedPosts = useMemo(() => {
     let filtered = activeCategory 
-      ? posts.filter(post => post.categories.includes(activeCategory))
+      ? posts.filter(post => post.categories && post.categories.includes(activeCategory))
       : posts;
 
     let sorted = [...filtered];
@@ -99,7 +100,7 @@ const ChurchNewsPage = () => {
             currentPosts.map((post, index) => (
               <tr key={post.id}>
                 <td>{filteredAndSortedPosts.length - (indexOfFirstPost + index)}</td>
-                <td className={styles.tdTitle}>{post.title.rendered}</td>
+                <td className={styles.tdTitle} onClick={() => setSelectedPost(post)}>{post.title.rendered}</td>
                 <td>관리자</td>
                 <td>{new Date(post.date).toLocaleDateString()}</td>
                 <td>-</td>
@@ -123,6 +124,26 @@ const ChurchNewsPage = () => {
         <input type="text" placeholder="검색어를 입력하세요" className={styles.searchInput} />
         <button type="submit" className={styles.searchButton}><FaSearch /></button>
       </form>
+
+      {/* 게시글 상세보기 모달 */}
+      {selectedPost && (
+        <div className={styles.modalOverlay} onClick={() => setSelectedPost(null)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <button className={styles.closeButton} onClick={() => setSelectedPost(null)}>&times;</button>
+              <h3>{selectedPost.title.rendered}</h3>
+              <div className={styles.modalMeta}>
+                <span>작성자: 관리자</span>
+                <span>작성일: {new Date(selectedPost.date).toLocaleDateString()}</span>
+              </div>
+            </div>
+            <div 
+              className={styles.modalBody} 
+              dangerouslySetInnerHTML={{ __html: selectedPost.content?.rendered || '내용이 없습니다.' }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

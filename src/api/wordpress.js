@@ -11,7 +11,7 @@ export const getPostsByCategory = async (categoryId, page = 1, perPage = 10) => 
           categories: categoryId,
           page: page,
           per_page: perPage,
-          _fields: 'id,title,date,content',
+          _fields: 'id,title,date,content,categories',
         },
       }
     );
