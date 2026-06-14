@@ -11,13 +11,13 @@ export const getPostsByCategory = async (categoryId, page = 1, perPage = 10) => 
           categories: categoryId,
           page: page,
           per_page: perPage,
-          _fields: 'id,title,date,content', // Fetch id, title, date, and content
+          _fields: 'id,title,date,content,categories',
         },
       }
     );
     return {
       posts: response.data,
-      totalPages: response.headers['x-wp-totalpages'],
+      totalPages: parseInt(response.headers['x-wp-totalpages'], 10) || 1,
     };
   } catch (error) {
     console.error(`Error fetching posts for category ${categoryId}:`, error);
@@ -47,8 +47,8 @@ export const getCategories = async () => {
   }
 };
 
-// TODO: Replace with the actual category ID for '앨범' posts
-const ALBUM_CATEGORY_ID = 123; // Placeholder for album category ID
+const ALBUM_CATEGORY_ID = 4; // 앨범 카테고리 ID
+const FREE_BOARD_CATEGORY_ID = 2; // 자유게시판 카테고리 ID
 
 export const getAlbumImages = async (page = 1, perPage = 10) => {
   try {
@@ -56,16 +56,38 @@ export const getAlbumImages = async (page = 1, perPage = 10) => {
 
     const images = [];
     posts.forEach(post => {
+      // WordPress API에서 content는 { rendered, protected } 객체로 반환됨
+      const htmlContent = post.content?.rendered || '';
+      if (!htmlContent) return;
+
       const parser = new DOMParser();
-      const doc = parser.parseFromString(post.content, 'text/html');
+      const doc = parser.parseFromString(htmlContent, 'text/html');
       const imgTags = doc.querySelectorAll('img');
+      const postTitle = post.title?.rendered || '제목 없음';
+
       imgTags.forEach(img => {
-        images.push({
-          src: img.src,
-          alt: img.alt || post.title, // Use post title as alt if alt is missing
-          postId: post.id,
-          postTitle: post.title,
-        });
+        // srcset에서 가장 큰 원본 이미지를 추출하거나 src 사용
+        const srcset = img.getAttribute('srcset');
+        let bestSrc = img.getAttribute('src') || '';
+        if (srcset) {
+          const parts = srcset.split(',').map(s => s.trim().split(' '));
+          // 가장 큰 너비의 이미지 선택
+          const largest = parts.reduce((max, curr) => {
+            const w = parseInt(curr[1]) || 0;
+            const maxW = parseInt(max[1]) || 0;
+            return w > maxW ? curr : max;
+          }, parts[0]);
+          if (largest && largest[0]) bestSrc = largest[0];
+        }
+        if (bestSrc) {
+          images.push({
+            src: bestSrc,
+            alt: img.alt || postTitle,
+            postId: post.id,
+            postTitle: postTitle,
+            date: post.date,
+          });
+        }
       });
     });
 
@@ -74,4 +96,47 @@ export const getAlbumImages = async (page = 1, perPage = 10) => {
     console.error('Error fetching album images:', error);
     throw error;
   }
+};
+
+// ─── 자유게시판 WordPress 연동 ───────────────────────────────────────────────
+
+export const getFreePosts = async () => {
+  try {
+    const response = await axios.get(`${WORDPRESS_API_URL}/wp/v2/posts`, {
+      params: {
+        categories: FREE_BOARD_CATEGORY_ID,
+        per_page: 100,
+        orderby: 'date',
+        order: 'desc',
+        _fields: 'id,title,content,date',
+      },
+    });
+    return response.data.map(post => ({
+      id: post.id,
+      title: post.title?.rendered || '',
+      content: post.content?.rendered || '',
+      date: post.date,
+    }));
+  } catch (error) {
+    console.error('Error fetching free board posts:', error);
+    throw error;
+  }
+};
+
+export const createFreePost = async (nickname, text) => {
+  // WordPress REST API에 새 포스트 등록 (Application Password 또는 백엔드 프록시 필요)
+  // 현재는 백엔드 프록시 엔드포인트를 통해 처리
+  const BACKEND_URL = import.meta.env.VITE_YOUTUBE_API_BASE_URL || 'https://api.mev.o-r.kr';
+  const response = await axios.post(`${BACKEND_URL}/api/wp-memo`, {
+    nickname: nickname.trim(),
+    content: text.trim(),
+    categoryId: FREE_BOARD_CATEGORY_ID,
+  });
+  return response.data;
+};
+
+export const deleteFreePost = async (postId) => {
+  const BACKEND_URL = import.meta.env.VITE_YOUTUBE_API_BASE_URL || 'https://api.mev.o-r.kr';
+  const response = await axios.delete(`${BACKEND_URL}/api/wp-memo/${postId}`);
+  return response.data;
 };

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 import { FaBars, FaTimes, FaUser, FaSitemap, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import LoginMemoModal from '../LoginMemoModal/LoginMemoModal';
+import SitemapModal from '../SitemapModal/SitemapModal';
 import navLinksData from '../../data/navLinks'; // Import navLinks data
 
 const LOGO_URL = 'https://api.seongrim.o-r.kr/wp-content/uploads/2025/08/logo.png';
@@ -11,6 +12,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSitemapOpen, setIsSitemapOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState(null); // State to manage open submenus in mobile
 
   useEffect(() => {
@@ -32,6 +34,11 @@ const Header = () => {
     setIsModalOpen(true);
   };
 
+  const handleSitemapClick = (e) => {
+    e.preventDefault();
+    setIsSitemapOpen(true);
+  };
+
   return (
     <>
       <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
@@ -39,7 +46,7 @@ const Header = () => {
           <div className={styles.topBar}>
             <div className={styles.utilityMenu}>
               <a href="#" onClick={handleLoginClick} aria-label="로그인"><FaUser /><span>로그인</span></a>
-              <Link to="/sitemap" aria-label="사이트맵"><FaSitemap /><span>사이트맵</span></Link>
+              <a href="#" onClick={handleSitemapClick} aria-label="사이트맵"><FaSitemap /><span>사이트맵</span></a>
             </div>
           </div>
           <div className={styles.headerContent}>
@@ -88,6 +95,7 @@ const Header = () => {
         </div>
       </header>
       <LoginMemoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <SitemapModal isOpen={isSitemapOpen} onClose={() => setIsSitemapOpen(false)} />
     </>
   );
 };
