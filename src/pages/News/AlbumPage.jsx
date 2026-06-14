@@ -43,6 +43,11 @@ const AlbumPage = () => {
     setSelectedImage(null);
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    return dateString.substring(0, 10);
+  };
+
   return (
     <div className={layoutStyles.pageContainer}>
       <h1 className={layoutStyles.title}>교회 앨범</h1>
@@ -77,7 +82,7 @@ const AlbumPage = () => {
                 </div>
                 <div className={albumStyles.albumInfo}>
                   <h3>{image.postTitle}</h3>
-                  <p>교회 앨범</p>
+                  <p>{formatDate(image.date)}</p>
                 </div>
               </div>
             ))}

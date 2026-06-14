@@ -85,6 +85,7 @@ export const getAlbumImages = async (page = 1, perPage = 10) => {
             alt: img.alt || postTitle,
             postId: post.id,
             postTitle: postTitle,
+            date: post.date,
           });
         }
       });
