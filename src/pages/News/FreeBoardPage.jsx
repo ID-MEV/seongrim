@@ -1,128 +1,199 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { getPostsByCategory, getCategories } from '../../api/wordpress';
+import React, { useState, useEffect } from 'react';
 import styles from './FreeBoard.module.css';
-import { FaSearch } from 'react-icons/fa';
+import { FaTrash, FaPaperPlane } from 'react-icons/fa';
+import axios from 'axios';
 
-const FREEBOARD_CATEGORY_ID = 2; // 자유게시판 카테고리 ID
+const API_BASE_URL = import.meta.env.VITE_YOUTUBE_API_BASE_URL || 'https://api.mev.o-r.kr';
+
+// WordPress 자유게시판 API (백엔드 프록시 경유)
+const getFreePosts = async () => {
+  const response = await axios.get(`${API_BASE_URL}/api/wp-memo`);
+  return response.data;
+};
+
+const createFreePost = async (nickname, content) => {
+  const response = await axios.post(`${API_BASE_URL}/api/wp-memo`, {
+    nickname,
+    content,
+  });
+  return response.data;
+};
+
+const deleteFreePost = async (id) => {
+  const response = await axios.delete(`${API_BASE_URL}/api/wp-memo/${id}`);
+  return response.data;
+};
+
+// WordPress content.rendered HTML에서 순수 텍스트 추출
+const stripHtml = (html) => {
+  if (!html) return '';
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.body.textContent || '';
+};
 
 const FreeBoardPage = () => {
   const [posts, setPosts] = useState([]);
-  const [allCategories, setAllCategories] = useState([]); // 모든 카테고리를 저장
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  const [activeCategory, setActiveCategory] = useState(null);
-  const [sortOrder, setSortOrder] = useState('latest');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
-  
-  const postsPerPage = 10;
+
+  // 입력 폼 상태
+  const [nickname, setNickname] = useState('');
+  const [content, setContent] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const [postsRes, categoriesRes] = await Promise.all([
-          getPostsByCategory(FREEBOARD_CATEGORY_ID), // 자유게시판 카테고리(2) 글만 가져옴
-          getCategories()
-        ]);
-        setPosts(postsRes.posts);
-        setAllCategories(categoriesRes.filter(cat => cat.id === FREEBOARD_CATEGORY_ID)); // 자유게시판 카테고리만 필터
-        setError(null);
-      } catch (err) {
-        setError(err.message || '데이터를 불러오는 중 알 수 없는 에러가 발생했습니다.');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
+    fetchPosts();
   }, []);
 
-  const filteredAndSortedPosts = useMemo(() => {
-    let filtered = activeCategory 
-      ? posts.filter(post => post.categories.includes(activeCategory))
-      : posts;
-
-    let sorted = [...filtered];
-    if (sortOrder === 'latest') {
-      sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else if (sortOrder === 'oldest') {
-      sorted.sort((a, b) => new Date(a.date) - new Date(b.date));
+  const fetchPosts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getFreePosts();
+      setPosts(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error('게시글 목록 조회 실패:', err);
+      setError('게시글 목록을 불러오는 데 실패했습니다.');
+    } finally {
+      setLoading(false);
     }
-    return sorted;
-  }, [posts, activeCategory, sortOrder]);
+  };
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredAndSortedPosts.slice(indexOfFirstPost, indexOfLastPost);
-  const totalPages = Math.ceil(filteredAndSortedPosts.length / postsPerPage);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    if (!nickname.trim()) {
+      alert('닉네임을 입력해 주세요.');
+      return;
+    }
+    if (!content.trim()) {
+      alert('내용을 입력해 주세요.');
+      return;
+    }
+    if (content.length > 300) {
+      alert('내용은 최대 300자까지 작성할 수 있습니다.');
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      const newPost = await createFreePost(nickname.trim(), content.trim());
+      // 새 글을 목록 맨 앞에 추가 (새로고침 없이 실시간 반영)
+      setPosts(prev => [newPost, ...prev]);
+      setContent('');
+    } catch (err) {
+      console.error('게시글 등록 실패:', err);
+      alert('게시글 등록에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('정말 이 게시글을 삭제하시겠습니까?')) return;
+
+    try {
+      await deleteFreePost(id);
+      setPosts(prev => prev.filter(post => post.id !== id));
+    } catch (err) {
+      console.error('게시글 삭제 실패:', err);
+      alert('게시글 삭제에 실패했습니다.');
+    }
+  };
+
+  // 포스트 제목([닉네임])과 본문(content)을 파싱
+  const parsePost = (post) => {
+    const nickname = post.title?.replace(/\[|\]/g, '') || '익명';
+    const text = stripHtml(post.content);
+    return { nickname, text };
+  };
 
   return (
     <div className={styles.boardContainer}>
       <h2 className={styles.boardTitle}>자유게시판</h2>
-      
-      <div className={styles.controlsHeader}>
-        <span className={styles.postCount}>전체 {filteredAndSortedPosts.length}</span>
-        <select className={styles.sortFilter} value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-          <option value="latest">최신순</option>
-          <option value="oldest">오래된 순</option>
-        </select>
-      </div>
+      <p className={styles.boardSubtitle}>성도들 간의 따뜻한 소통과 나눔의 공간입니다.</p>
 
-      <ul className={styles.categoryFilters}>
-        <li className={!activeCategory ? styles.active : ''} onClick={() => setActiveCategory(null)}>전체</li>
-        {allCategories.map(cat => (
-          <li key={cat.id} className={activeCategory === cat.id ? styles.active : ''} onClick={() => setActiveCategory(cat.id)}>
-            {cat.name}
-          </li>
-        ))}
-      </ul>
-
-      <table className={styles.boardTable}>
-        <thead>
-          <tr>
-            <th className={styles.thNumber}>번호</th>
-            <th className={styles.thTitle}>제목</th>
-            <th className={styles.thAuthor}>작성자</th>
-            <th className={styles.thDate}>작성일</th>
-            <th className={styles.thViews}>조회</th>
-          </tr>
-        </thead>
-        <tbody>
-          {loading ? (
-            <tr><td colSpan="5" className={styles.loading}>게시글을 불러오는 중입니다...</td></tr>
-          ) : error ? (
-            <tr><td colSpan="5" className={styles.error}>에러: {error}</td></tr>
-          ) : currentPosts.length > 0 ? (
-            currentPosts.map((post, index) => (
-              <tr key={post.id}>
-                <td>{filteredAndSortedPosts.length - (indexOfFirstPost + index)}</td>
-                <td className={styles.tdTitle}>{post.title.rendered}</td>
-                <td>관리자</td>
-                <td>{new Date(post.date).toLocaleDateString()}</td>
-                <td>-</td>
-              </tr>
-            ))
-          ) : (
-            <tr><td colSpan="5">게시글이 없습니다.</td></tr>
-          )}
-        </tbody>
-      </table>
-
-      <div className={styles.pagination}>
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
-          <button key={number} onClick={() => paginate(number)} className={currentPage === number ? styles.activePage : ''}>
-            {number}
+      {/* 글쓰기 폼 */}
+      <form className={styles.memoFormCard} onSubmit={handleSubmit}>
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            placeholder="닉네임"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            className={styles.nicknameInput}
+            maxLength={20}
+            disabled={submitting}
+            required
+          />
+          <textarea
+            placeholder="따뜻한 이야기를 나누어 주세요 (최대 300자)"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className={styles.contentTextarea}
+            maxLength={300}
+            disabled={submitting}
+            required
+          />
+        </div>
+        <div className={styles.formFooter}>
+          <span className={styles.charCount}>{content.length} / 300자</span>
+          <button
+            type="submit"
+            className={styles.submitButton}
+            disabled={submitting || !nickname.trim() || !content.trim()}
+          >
+            {submitting ? (
+              <div className={styles.spinner}></div>
+            ) : (
+              <><FaPaperPlane /> 등록</>
+            )}
           </button>
-        ))}
-      </div>
-
-      <form className={styles.searchForm}>
-        <input type="text" placeholder="검색어를 입력하세요" className={styles.searchInput} />
-        <button type="submit" className={styles.searchButton}><FaSearch /></button>
+        </div>
       </form>
+
+      {/* 게시글 목록 */}
+      {loading ? (
+        <div className={styles.loading}>게시글을 불러오는 중...</div>
+      ) : error ? (
+        <div className={styles.error}>{error}</div>
+      ) : posts.length === 0 ? (
+        <div className={styles.memoGrid}>
+          <div className={styles.noData}>등록된 자유게시물이 없습니다. 첫 글을 작성해 보세요!</div>
+        </div>
+      ) : (
+        <div className={styles.memoGrid}>
+          {posts.map((post) => {
+            const { nickname, text } = parsePost(post);
+            return (
+              <div key={post.id} className={styles.memoCard}>
+                <div className={styles.memoHeader}>
+                  <span className={styles.nickname}>{nickname}</span>
+                  <button
+                    onClick={() => handleDelete(post.id)}
+                    className={styles.deleteButton}
+                    title="삭제"
+                  >
+                    <FaTrash size={14} />
+                  </button>
+                </div>
+                <div className={styles.memoContent}>{text}</div>
+                <div className={styles.memoFooter}>
+                  {post.date
+                    ? new Date(post.date).toLocaleString('ko-KR', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })
+                    : ''}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

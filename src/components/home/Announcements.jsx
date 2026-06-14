@@ -18,7 +18,7 @@ const Announcements = () => {
         const response = await getPostsByCategory(CHURCH_NEWS_CATEGORY_ID, 1, 4); // 최신 4개의 교회소식 가져오기
         setAnnouncements(response.posts.map(post => ({
           id: post.id,
-          title: post.title.rendered,
+          title: post.title ? post.title.rendered : '',
           date: new Date(post.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\./g, '.').trim(), // 날짜 형식 변경
           link: `/news/church-news?id=${post.id}` // 상세 페이지 링크
         })));
@@ -70,7 +70,7 @@ const Announcements = () => {
     return { datePart, issuePart, titlePart };
   };
 
-  const bulletinInfo = latestBulletin ? parseBulletinTitle(latestBulletin.title.rendered) : { datePart: '', issuePart: '', titlePart: '' };
+  const bulletinInfo = latestBulletin && latestBulletin.title ? parseBulletinTitle(latestBulletin.title.rendered || '') : { datePart: '', issuePart: '', titlePart: '' };
 
   const displayTitle = bulletinInfo.titlePart || '최신 주보';
   const displayDateAndIssue = bulletinInfo.datePart + (bulletinInfo.issuePart ? ` (${bulletinInfo.issuePart})` : '');

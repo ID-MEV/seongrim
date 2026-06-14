@@ -2,7 +2,15 @@ import React from 'react';
 import './YouTubeVideoCard.css';
 
 const YouTubeVideoCard = ({ video, onClick }) => {
-    const thumbnailUrl = `https://img.youtube.com/vi/${video.url.split('v=')[1]}/mqdefault.jpg`;
+    const getYouTubeId = (url) => {
+        if (!url) return null;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
+
+    const videoId = getYouTubeId(video.url);
+    const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
 
     // Function to parse sermon title from the full YouTube video title
     const parseVideoTitle = (fullTitle) => {
