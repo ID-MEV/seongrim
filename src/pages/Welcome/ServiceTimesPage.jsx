@@ -38,7 +38,7 @@ const ServiceTimesPage = () => {
               </tr>
               <tr>
                 <td><strong>새벽기도회</strong></td>
-                <td>오전 5:30 (화-토)</td>
+                <td>오전 5:00 (화-토)</td>
                 <td>본당</td>
               </tr>
             </tbody>
@@ -66,7 +66,7 @@ const ServiceTimesPage = () => {
           </table>
 
           <p className={styles.note}>
-            * 모든 예배는 온라인으로도 실시간 방송됩니다. (유튜브 채널: 성림교회)
+            * 모든 예배는 온라인으로도 실시간 방송됩니다. (유튜브 채널: 광주성림교회)
           </p>
         </div>
       </FadeIn>

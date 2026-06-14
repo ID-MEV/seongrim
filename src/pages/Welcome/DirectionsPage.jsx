@@ -31,7 +31,7 @@ const DirectionsPage = () => {
             <hr className={styles.separator} />
           </div>
           <ul className={styles.bulletedList}>
-              <li><strong>주소</strong>: (61914) 광주 서구 죽봉대로119번길 8-1</li>
+              <li><strong>주소</strong>: (61914) 광주광역시 서구 죽봉대로119번길 8-1</li>
           </ul>
 
           <div className={styles.headingWithSeparator} style={{marginTop: '40px'}}>
@@ -40,10 +40,7 @@ const DirectionsPage = () => {
           </div>
           <ul className={styles.bulletedList}>
             <li>
-              <strong>지하철:</strong> 2호선 강남역 11번 출구에서 도보 5분
-            </li>
-            <li>
-              <strong>버스:</strong> '강남역' 정류장에서 하차 (파랑: 140, 402, 420 / 초록: 3412, 4412)
+              <strong>버스:</strong> '광천치안센터/광천파출소' 정류장에서 하차 (간선 매월26, 봉선37, 송암47, 수완12, 일곡38 / 지선 228(화순전남대병원), 문훙53, 상무64, 양산60, 용전84, 마을777)
             </li>
           </ul>
 
@@ -52,7 +49,7 @@ const DirectionsPage = () => {
             <hr className={styles.separator} />
           </div>
           <p>
-            건물 내 주차장을 이용하시거나, 주일에는 인근 공영 주차장을 무료로 이용하실 수 있습니다.
+            교회 주차장을 이용하시거나, 건너편 제2 주차장을 활용해주시길 바라겠습니다.
           </p>
         </div>
       </FadeIn>
