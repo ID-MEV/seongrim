@@ -91,6 +91,21 @@ fix: 푸터 더미데이터 삭제 및 정보 최신화
 
 ---
 
+## ⚠️ 위험한 명령 규칙 (Destructive Command Safety)
+
+**파괴적인 명령은 사용자에게 직접 실행을 요청할 것.**
+
+다음과 같은 명령은 내가 직접 실행하지 않고, 사용자에게 명령어를 제시하여 직접 실행하게 할 것:
+- `rm`, `rm -rf` 등 파일/디렉토리 삭제
+- `git push --force`, `git reset --hard` 등 되돌릴 수 없는 git 명령
+- `sudo` 권한이 필요한 시스템 설정 변경
+- 데이터베이스 삭제/초기화
+- 기타 되돌릴 수 없는 모든 작업
+
+**이유:** 파괴적인 작업은 실수 시 복구가 불가능하므로, 사용자의 명시적 확인 후 실행해야 함.
+
+---
+
 ## 🔒 보안 규칙 (Security Rules)
 
 - API 키, 비밀번호, 토큰 등을 코드에 하드코딩하지 말 것.
@@ -189,53 +204,3 @@ fix: 푸터 더미데이터 삭제 및 정보 최신화
 4. **커밋**: 커밋 규칙에 따라 커밋 메시지 작성 → `git add` → `git commit` → `git push`
 5. **요약 보고**: 변경 파일, 내용, 검증 결과, 커밋 해시를 사용자에게 보고
 6. **개발서버**: 필요 시 백그라운드 실행, 작업 완료 후 종료
-
----
-
-## 📌 성림 프론트엔드 프로젝트 특이사항
-
-### 🛠️ 하네스 엔지니어링 (Harness Engineering) 프로세스
-
-이 프로젝트는 완성도 높은 개발을 위해 **Planer (설계자)**, **Generator (생성자)**, **Evaluator (평가자)** 3가지 역할의 에이전트 협업 구조를 적용합니다.
-
-* **Planer (설계자)**: 코딩 작업 없이 오직 계획 및 구조 설계에만 집중. PRD 작성 및 구조화.
-* **Generator (생성자)**: 설계서(PRD)를 바탕으로 실제 고품질 코드를 작성.
-* **Evaluator (평가자)**: 작성된 코드가 설계서의 요구사항을 충족하는지, 버그나 스타일 이슈가 없는지 다각도로 평가.
-
-### ✅ Chrome 임시 프로필 실행
-
-다음 명령으로 임시 프로필을 사용한 Chrome을 실행하고 `chrome-devtools-mcp`와 자동 연결:
-
-```bash
-killall "Google Chrome"
-open -na "Google Chrome" --args \
-  --remote-debugging-port=9222 \
-  --user-data-dir=/tmp/chrome-remote-debug \
-  --no-first-run &
-npm exec chrome-devtools-mcp@latest --autoConnect
-```
-
-### 🧪 EVALUATOR 검증 기준
-
-| 평가 ID | 대상 | 통과 기준 |
-|---|---|---|
-| EVAL-REQ-01 | 최신 설교 & 유튜브 연동 | 최신 영상 3개 렌더링, 탭 전환, 모달 재생, 에러 없음 |
-| EVAL-REQ-02 | 교회 앨범 Grid 갤러리 | 반응형 그리드, WP 데이터 렌더링, 라이트박스 모달 |
-| EVAL-REQ-03 | 자유게시판 CRUD | 리스트 조회, 실시간 작성, 소프트 삭제 |
-| EVAL-REQ-04 | 사이트맵 모달 | 글래스모피즘 오버레이, 스크롤 차단, 라우터 이동 |
-
-### 📄 API 엔드포인트
-
-**백엔드 (api.mev.o-r.kr)**:
-* `GET /api/sermons/latest` — 최신 설교
-* `GET /api/youtube-videos?playlistId={id}` — 유튜브 영상 목록
-* `GET /api/memo` — 자유게시판 목록
-* `POST /api/memo` — 게시글 작성
-* `DELETE /api/memo/{id}` — 게시글 삭제
-* `GET /api/weather` — 날씨
-
-**WordPress (api.seongrim.o-r.kr)**:
-* `GET /wp-json/wp/v2/posts` — 게시글 목록
-* `GET /wp-json/wp/v2/posts?categories={id}` — 카테고리별 조회
-* `GET /wp-json/wp/v2/media` — 미디어
-* `GET /wp-json/wp/v2/categories` — 카테고리 목록

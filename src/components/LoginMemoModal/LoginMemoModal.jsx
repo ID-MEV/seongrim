@@ -1,26 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './LoginMemoModal.module.css';
+import { useAuth } from '../../contexts/AuthContext';
 
 const LoginMemoModal = ({ isOpen, onClose }) => {
-  if (!isOpen) {
-    return null;
-  }
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+
+  if (!isOpen) return null;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const res = await fetch('https://api.mev.o-r.kr/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.token) {
+        login(data.token, data.username);
+        onClose();
+        setUsername('');
+        setPassword('');
+      } else {
+        setError(data.message || '로그인에 실패했습니다.');
+      }
+    } catch (err) {
+      setError('서버 연결에 실패했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.modalBackdrop} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
-          <h2>향후 개발 계획</h2>
+          <h2>관리자 로그인</h2>
           <button onClick={onClose} className={styles.closeButton}>&times;</button>
         </div>
-        <div className={styles.modalBody}>
-          <p>로그인 기능은 향후 웹사이트 관리자를 위해 다음과 같은 기능을 제공할 예정입니다.</p>
-          <ul>
-            <li><strong>배경화면 수정:</strong> 관리자가 직접 홈페이지의 배경사을을 변경할 수 있는 기능을 제공합니다.</li>
-            <li><strong>컨텐츠 수정:</strong> 게시글 페이지를 제외한 정적인 콘텐츠를 담고 있는 페이지의 텍스트를 수정할 수 있습니다.</li>
-          </ul>
-          <p>이 기능은 현재 개발 계획 단계에 있으며, 빠른 시일 내에 구현될 예정입니다.</p>
-        </div>
+        <form onSubmit={handleSubmit} className={styles.loginForm}>
+          <div className={styles.inputGroup}>
+            <label htmlFor="username">아이디</label>
+            <input
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="아이디를 입력하세요"
+              required
+              autoComplete="username"
+            />
+          </div>
+          <div className={styles.inputGroup}>
+            <label htmlFor="password">비밀번호</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호를 입력하세요"
+              required
+              autoComplete="current-password"
+            />
+          </div>
+          {error && <p className={styles.errorMessage}>{error}</p>}
+          <button type="submit" className={styles.loginButton} disabled={loading}>
+            {loading ? '로그인 중...' : '로그인'}
+          </button>
+        </form>
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
-import { FaBars, FaTimes, FaUser, FaSitemap, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaBars, FaTimes, FaUser, FaSitemap, FaChevronDown, FaChevronUp, FaSignOutAlt } from 'react-icons/fa';
+import { useAuth } from '../../contexts/AuthContext';
 import LoginMemoModal from '../LoginMemoModal/LoginMemoModal';
 import SitemapModal from '../SitemapModal/SitemapModal';
-import navLinksData from '../../data/navLinks'; // Import navLinks data
+import navLinksData from '../../data/navLinks';
 
 const LOGO_URL = 'https://api.seongrim.o-r.kr/wp-content/uploads/2025/08/logo.png';
 
@@ -13,7 +14,8 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSitemapOpen, setIsSitemapOpen] = useState(false);
-  const [openSubmenu, setOpenSubmenu] = useState(null); // State to manage open submenus in mobile
+  const [openSubmenu, setOpenSubmenu] = useState(null);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,6 +36,11 @@ const Header = () => {
     setIsModalOpen(true);
   };
 
+  const handleLogoutClick = (e) => {
+    e.preventDefault();
+    logout();
+  };
+
   const handleSitemapClick = (e) => {
     e.preventDefault();
     setIsSitemapOpen(true);
@@ -45,7 +52,14 @@ const Header = () => {
         <div className={styles.headerContainer}>
           <div className={styles.topBar}>
             <div className={styles.utilityMenu}>
-              <a href="#" onClick={handleLoginClick} aria-label="로그인"><FaUser /><span>로그인</span></a>
+              {user ? (
+                <>
+                  <span className={styles.userInfo}><FaUser /> {user.username}</span>
+                  <a href="#" onClick={handleLogoutClick} aria-label="로그아웃"><FaSignOutAlt /><span>로그아웃</span></a>
+                </>
+              ) : (
+                <a href="#" onClick={handleLoginClick} aria-label="로그인"><FaUser /><span>로그인</span></a>
+              )}
               <a href="#" onClick={handleSitemapClick} aria-label="사이트맵"><FaSitemap /><span>사이트맵</span></a>
             </div>
           </div>
