@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext(null);
 
@@ -25,6 +26,8 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('admin_token');
     localStorage.removeItem('admin_username');
     setUser(null);
+    // 로그아웃 시 홈으로 리다이렉트
+    window.location.href = '/';
   };
 
   return (

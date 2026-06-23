@@ -30,22 +30,44 @@ const AdminStats = () => {
 
   return (
     <div className={styles.statsContainer}>
+      <h2 style={{ fontSize: '1.1rem', marginBottom: 16 }}>대시보드</h2>
+
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
           <span className={styles.statNumber}>{stats?.memos || 0}</span>
-          <span className={styles.statLabel}>게시글</span>
+          <span className={styles.statLabel}>메모 게시글</span>
+        </div>
+        <div className={styles.statCard}>
+          <span className={styles.statNumber}>{stats?.wpPosts || 0}</span>
+          <span className={styles.statLabel}>WP 게시글</span>
         </div>
         <div className={styles.statCard}>
           <span className={styles.statNumber}>{stats?.videos || 0}</span>
-          <span className={styles.statLabel}>캐시 영상</span>
+          <span className={styles.statLabel}>
+            캐시 영상
+            <span style={{ display: 'block', fontSize: '0.7rem', color: '#aaa', marginTop: 2 }}>
+              유튜브 예배 영상
+            </span>
+          </span>
         </div>
         <div className={styles.statCard}>
           <span className={styles.statNumber}>{stats?.members || 0}</span>
-          <span className={styles.statLabel}>회원</span>
+          <span className={styles.statLabel}>교인 명단</span>
         </div>
       </div>
+
       <div className={styles.infoBox}>
-        <h3>시스템 정보</h3>
+        <h3>📌 각 항목 설명</h3>
+        <ul>
+          <li><strong>메모 게시글</strong> — 관리자 페이지에서 직접 작성한 공지/메모</li>
+          <li><strong>WP 게시글</strong> — WordPress에서 작성한 게시물 (예배 영상, 소식 등)</li>
+          <li><strong>캐시 영상</strong> — 유튜브 예배 영상을 서버에 캐싱한 수 (자동 업데이트)</li>
+          <li><strong>교인 명단</strong> — DB에 등록된 교인 수</li>
+        </ul>
+      </div>
+
+      <div className={styles.infoBox} style={{ marginTop: 16 }}>
+        <h3>🖥️ 시스템 정보</h3>
         <ul>
           <li>Apache + PM2 + MariaDB 환경</li>
           <li>React 19 + Vite 7 프론트엔드</li>

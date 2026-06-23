@@ -18,6 +18,12 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    allowedHosts: ['mev.o-r.kr']
+    allowedHosts: ['mev.o-r.kr'],
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5101',
+        changeOrigin: true,
+      },
+    },
   }
 });
