@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
-import { FaBars, FaTimes, FaUser, FaSitemap, FaChevronDown, FaChevronUp, FaSignOutAlt } from 'react-icons/fa';
+import { FaBars, FaTimes, FaUser, FaSitemap, FaChevronDown, FaChevronUp, FaSignOutAlt, FaCog } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 import LoginMemoModal from '../LoginMemoModal/LoginMemoModal';
 import SitemapModal from '../SitemapModal/SitemapModal';
@@ -55,6 +55,7 @@ const Header = () => {
               {user ? (
                 <>
                   <span className={styles.userInfo}><FaUser /> {user.username}</span>
+                  <Link to="/admin" className={styles.adminLink}><FaCog /><span>관리자</span></Link>
                   <a href="#" onClick={handleLogoutClick} aria-label="로그아웃"><FaSignOutAlt /><span>로그아웃</span></a>
                 </>
               ) : (

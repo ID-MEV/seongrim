@@ -38,6 +38,9 @@ const FreeBoardPage = lazy(() => import('./pages/News/FreeBoardPage.jsx'));
 
 const AlbumPage = lazy(() => import('./pages/News/AlbumPage.jsx'));
 
+// Admin page (lazy loaded)
+const AdminPage = lazy(() => import('./pages/AdminPage.jsx'));
+
 
 const router = createBrowserRouter([
   {
@@ -100,6 +103,11 @@ const router = createBrowserRouter([
           { path: 'album', element: <Suspense fallback={<div>Loading Album...</div>}><AlbumPage /></Suspense> },
           { path: 'free-board', element: <Suspense fallback={<div>Loading Free Board...</div>}><FreeBoardPage /></Suspense> },
         ],
+      },
+      // Admin
+      {
+        path: '/admin',
+        element: <Suspense fallback={<div>Loading Admin...</div>}><AdminPage /></Suspense>,
       },
     ],
   },
