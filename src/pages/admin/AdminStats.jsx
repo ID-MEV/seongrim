@@ -3,14 +3,14 @@ import { useAuth } from '../../contexts/AuthContext';
 import styles from './AdminStats.module.css';
 
 const AdminStats = () => {
+  const { token } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const token = localStorage.getItem('admin_token');
-        const res = await fetch('https://api.mev.o-r.kr/api/admin/stats', {
+        const res = await fetch('/api/admin/stats', {
           headers: { 'Authorization': `Bearer ${token}` },
         });
         if (res.ok) {

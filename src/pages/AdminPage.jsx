@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import MemoManagement from './admin/MemoManagement';
 import SettingsManagement from './admin/SettingsManagement';
 import MemberManagement from './admin/MemberManagement';
+import AdminStats from './admin/AdminStats';
 import styles from './AdminPage.module.css';
 
 const AdminPage = () => {
-  const [activeTab, setActiveTab] = useState('memos');
+  const [activeTab, setActiveTab] = useState('stats');
 
   const tabs = [
+    { id: 'stats', label: '📊 대시보드' },
     { id: 'memos', label: '📝 게시글 관리' },
     { id: 'settings', label: '⚙️ 설정' },
     { id: 'members', label: '👥 회원 목록' },
@@ -30,6 +32,7 @@ const AdminPage = () => {
       </div>
 
       <div className={styles.content}>
+        {activeTab === 'stats' && <AdminStats />}
         {activeTab === 'memos' && <MemoManagement />}
         {activeTab === 'settings' && <SettingsManagement />}
         {activeTab === 'members' && <MemberManagement />}
