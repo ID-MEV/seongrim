@@ -9,15 +9,61 @@
       /* 모바일 확대 완전 차단 */
       html {
         touch-action: manipulation;
+        -webkit-text-size-adjust: 100%;
       }
       body {
         touch-action: manipulation;
+        -webkit-text-size-adjust: 100%;
       }
       /* iOS Safari 확대 방지 */
       input, textarea, select {
         font-size: 16px !important;
       }
     </style>
+    <script>
+      // 모바일 확대 완전 차단 (더블탭, 핀치, 트플탭)
+      (function() {
+        // 더블탭 차단
+        var lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+          var now = Date.now();
+          if (now - lastTouchEnd <= 300) {
+            e.preventDefault();
+          }
+          lastTouchEnd = now;
+        }, { passive: false });
+
+        // 핀치 확대 차단
+        document.addEventListener('gesturestart', function(e) {
+          e.preventDefault();
+        });
+        document.addEventListener('gesturechange', function(e) {
+          e.preventDefault();
+        });
+        document.addEventListener('gestureend', function(e) {
+          e.preventDefault();
+        });
+
+        // 트리플 탭 차단
+        var touchCount = 0;
+        document.addEventListener('touchstart', function(e) {
+          touchCount = e.touches.length;
+        }, { passive: true });
+
+        document.addEventListener('touchend', function(e) {
+          if (touchCount >= 2) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+
+        // 확대/축소 비율 고정
+        document.addEventListener('wheel', function(e) {
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+      })();
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

@@ -114,7 +114,7 @@ export const SkeletonHero = () => (
   </div>
 );
 
-// 홈페이지 카드 섹션 스켈레톤
+// 홈페이지 카드 섹션 스켈레톤 (기존 - 사용 안함)
 export const SkeletonCardSection = ({ count = 3 }) => (
   <div className={styles.cardGrid}>
     {Array.from({ length: count }).map((_, i) => (
@@ -128,4 +128,45 @@ export const SkeletonCardSection = ({ count = 3 }) => (
       </div>
     ))}
   </div>
+);
+
+// Announcements 스켈레톤
+export const SkeletonAnnouncements = () => (
+  <section className={styles.announcementsSection}>
+    <div className={styles.container}>
+      <div className={styles.announcements}>
+        <div className={styles.skeleton} style={{ width: '100px', height: '20px', marginBottom: '16px' }} />
+        <ul className={styles.list}>
+          {[1, 2, 3, 4].map((i) => (
+            <li key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eee' }}>
+              <div className={styles.skeleton} style={{ width: '60%', height: '14px' }} />
+              <div className={styles.skeleton} style={{ width: '70px', height: '14px' }} />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className={styles.weeklyReport}>
+        <div className={styles.skeleton} style={{ width: '60px', height: '20px', marginBottom: '12px' }} />
+        <div className={styles.reportBox}>
+          <div className={styles.skeleton} style={{ width: '70%', height: '16px', marginBottom: '8px' }} />
+          <div className={styles.skeleton} style={{ width: '50%', height: '14px' }} />
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+// QuickLinks 스켈레톤
+export const SkeletonQuickLinks = () => (
+  <section className={styles.quickLinksSection}>
+    <div className={styles.container}>
+      {[1, 2, 3, 4].map((i) => (
+        <div key={i} className={styles.linkCard}>
+          <div className={styles.skeleton} style={{ width: '40px', height: '40px', borderRadius: '50%', marginBottom: '12px' }} />
+          <div className={styles.skeleton} style={{ width: '70%', height: '16px', marginBottom: '6px' }} />
+          <div className={styles.skeleton} style={{ width: '90%', height: '12px' }} />
+        </div>
+      ))}
+    </div>
+  </section>
 );
