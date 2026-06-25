@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from '../AdminPage.module.css';
+import { SkeletonTabContent } from '../../components/Skeleton/Skeleton';
 
 const API_BASE = '/api/admin';
 
@@ -61,7 +62,7 @@ const MemoManagement = () => {
     }
   };
 
-  if (loading) return <div className={styles.loading}>불러오는 중...</div>;
+  if (loading) return <SkeletonTabContent />;
   if (error) return <div className={styles.empty}>오류: {error}</div>;
 
   return (

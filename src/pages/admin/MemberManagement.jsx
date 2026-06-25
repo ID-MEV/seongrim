@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from '../AdminPage.module.css';
+import { SkeletonMembers } from '../../components/Skeleton/Skeleton';
 
 const API_BASE = '/api/admin';
 
@@ -40,7 +41,7 @@ const MemberManagement = () => {
       )
     : members;
 
-  if (loading) return <div className={styles.loading}>불러오는 중...</div>;
+  if (loading) return <SkeletonMembers />;
   if (error) return <div className={styles.empty}>오류: {error}</div>;
 
   return (

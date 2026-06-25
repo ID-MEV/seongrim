@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './AdminStats.module.css';
+import { SkeletonDashboard } from '../../components/Skeleton/Skeleton';
 
 const AdminStats = () => {
   const { token } = useAuth();
@@ -26,7 +27,7 @@ const AdminStats = () => {
     fetchStats();
   }, []);
 
-  if (loading) return <p className={styles.loading}>통계 불러오는 중...</p>;
+  if (loading) return <SkeletonDashboard />;
 
   return (
     <div className={styles.statsContainer}>

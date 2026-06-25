@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from '../AdminPage.module.css';
+import { SkeletonSettings } from '../../components/Skeleton/Skeleton';
 
 const API_BASE = '/api/admin';
 
@@ -52,7 +53,7 @@ const SettingsManagement = () => {
     }
   };
 
-  if (loading) return <div className={styles.loading}>불러오는 중...</div>;
+  if (loading) return <SkeletonSettings />;
 
   return (
     <div>
