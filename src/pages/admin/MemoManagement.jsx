@@ -14,9 +14,12 @@ const MemoManagement = () => {
   const fetchMemos = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/memos`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const [res] = await Promise.all([
+        fetch(`${API_BASE}/memos`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        new Promise(r => setTimeout(r, 500)), // 최소 스켈레톤 표시 시간
+      ]);
       if (!res.ok) throw new Error('게시글을 불러올 수 없습니다.');
       const data = await res.json();
       setMemos(data);

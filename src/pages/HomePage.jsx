@@ -9,8 +9,8 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 페이지 초기 로딩 시 짧은 로딩 시간 후 표시
-    const timer = setTimeout(() => setLoading(false), 600);
+    // 최소 스켈레톤 표시 시간 800ms (부드러운 전환 + 깜빡임 방지)
+    const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
 

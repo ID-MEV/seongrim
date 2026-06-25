@@ -11,9 +11,12 @@ const AdminStats = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch('/api/admin/stats', {
-          headers: { 'Authorization': `Bearer ${token}` },
-        });
+        const [res] = await Promise.all([
+          fetch('/api/admin/stats', {
+            headers: { 'Authorization': `Bearer ${token}` },
+          }),
+          new Promise(r => setTimeout(r, 500)),
+        ]);
         if (res.ok) {
           const data = await res.json();
           setStats(data);

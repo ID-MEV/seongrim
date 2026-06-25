@@ -13,24 +13,26 @@ const SettingsManagement = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
+    const fetchSettings = async () => {
+      setLoading(true);
+      try {
+        const [res] = await Promise.all([
+          fetch(`${API_BASE}/settings`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          new Promise(r => setTimeout(r, 500)),
+        ]);
+        if (!res.ok) throw new Error('설정을 불러올 수 없습니다.');
+        const data = await res.json();
+        setSettings(data);
+      } catch (err) {
+        setMessage('오류: ' + err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchSettings();
   }, []);
-
-  const fetchSettings = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${API_BASE}/settings`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!res.ok) throw new Error('설정을 불러올 수 없습니다.');
-      const data = await res.json();
-      setSettings(data);
-    } catch (err) {
-      setMessage('오류: ' + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSave = async () => {
     setSaving(true);

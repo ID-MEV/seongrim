@@ -6,6 +6,23 @@ import App from './App.jsx';
 import HomePage from './pages/HomePage.jsx';
 import './index.css';
 
+// 모바일 더블탭 확대 차단
+(function() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', function(e) {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      e.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+
+  // 핀치 확대 차단
+  document.addEventListener('gesturestart', function(e) {
+    e.preventDefault();
+  });
+})();
+
 // Layout Imports (Lazy Loaded)
 const WelcomeLayout = lazy(() => import('./pages/Welcome/WelcomeLayout.jsx'));
 const AboutLayout = lazy(() => import('./pages/About/AboutLayout.jsx'));

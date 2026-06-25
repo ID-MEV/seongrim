@@ -15,9 +15,12 @@ const MemberManagement = () => {
   const fetchMembers = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/members`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const [res] = await Promise.all([
+        fetch(`${API_BASE}/members`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        new Promise(r => setTimeout(r, 500)),
+      ]);
       if (!res.ok) throw new Error('회원 목록을 불러올 수 없습니다.');
       const data = await res.json();
       setMembers(data);

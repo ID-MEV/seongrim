@@ -45,7 +45,20 @@ const SermonSection = () => {
       <section className={styles.sermonSection}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>최신 설교 말씀</h2>
-          <p>설교 영상을 불러오는 중...</p>
+          <div className={styles.sermonGrid}>
+            {[1, 2, 3].map((i) => (
+              <div key={i} className={styles.sermonCard}>
+                <div className={styles.thumbnail}>
+                  <div className={styles.skeletonThumbnail} />
+                </div>
+                <div className={styles.cardContent}>
+                  <div className={styles.skeletonTitle} />
+                  <div className={styles.skeletonInfo} />
+                  <div className={styles.skeletonType} />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     );
