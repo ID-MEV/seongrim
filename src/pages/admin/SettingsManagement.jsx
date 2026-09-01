@@ -156,6 +156,8 @@ const SettingsManagement = () => {
       </div>
     );
   }
+
+  return (
     <div className={styles.container}>
       {/* 1. 신규 회원 추가 세션 */}
       <div className={styles.section}>
