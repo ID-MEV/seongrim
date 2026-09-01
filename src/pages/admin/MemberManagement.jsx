@@ -13,15 +13,15 @@ const MemberManagement = () => {
   const [searchField, setSearchField] = useState('이름');
   const [search, setSearch] = useState('');
 
-  const fetchMembers = async () => {
+  const fetchMembers = async (queryValue = search, queryField = searchField) => {
     setLoading(true);
     setError(null);
     try {
       let url = '/api/member';
-      if (search.trim()) {
+      if (queryValue.trim()) {
         const params = new URLSearchParams({
-          field: searchField,
-          value: search.trim(),
+          field: queryField,
+          value: queryValue.trim(),
         });
         url += `?${params.toString()}`;
       }
@@ -36,20 +36,24 @@ const MemberManagement = () => {
     }
   };
 
+  // 최초 로드
   useEffect(() => {
-    fetchMembers();
+    fetchMembers('', searchField);
   }, []);
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    fetchMembers();
-  };
+  // 검색어 입력 시 디바운스로 실시간 자동 검색
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchMembers(search, searchField);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [search, searchField]);
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>회원 목록 <span className={styles.count}>({members.length}명)</span></h2>
-        <form onSubmit={handleSearchSubmit} className={styles.searchWrapper}>
+        <div className={styles.searchWrapper}>
           <select
             value={searchField}
             onChange={(e) => setSearchField(e.target.value)}
@@ -65,23 +69,18 @@ const MemberManagement = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className={styles.searchInput}
+            autoFocus
           />
-          <button type="submit" className={styles.refreshBtn}>
-            검색
-          </button>
           {search && (
             <button
               type="button"
               className={styles.resetBtn}
-              onClick={() => {
-                setSearch('');
-                setTimeout(() => fetchMembers(), 0);
-              }}
+              onClick={() => setSearch('')}
             >
               초기화
             </button>
           )}
-        </form>
+        </div>
       </div>
 
       {loading ? (
