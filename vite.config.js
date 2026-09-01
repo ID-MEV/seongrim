@@ -21,8 +21,9 @@ export default defineConfig({
     allowedHosts: ['mev.o-r.kr'],
     proxy: {
       '/api': {
-        target: 'http://localhost:5101',
+        target: 'https://api.mev.o-r.kr',
         changeOrigin: true,
+        secure: false,
       },
     },
   }
