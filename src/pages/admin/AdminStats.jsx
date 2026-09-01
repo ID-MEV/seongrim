@@ -4,11 +4,13 @@ import styles from './AdminStats.module.css';
 import { SkeletonDashboard } from '../../components/Skeleton/Skeleton';
 
 const AdminStats = () => {
-  const { token } = useAuth();
+  const { user } = useAuth();
+  const token = user?.token;
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!token) return;
     const fetchStats = async () => {
       try {
         const [res] = await Promise.all([
@@ -28,7 +30,7 @@ const AdminStats = () => {
       }
     };
     fetchStats();
-  }, []);
+  }, [token]);
 
   if (loading) return <SkeletonDashboard />;
 
