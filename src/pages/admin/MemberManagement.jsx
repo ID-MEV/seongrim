@@ -95,6 +95,20 @@ const MemberManagement = () => {
         <div className={styles.cardGrid}>
           {members.map((member, index) => (
             <div key={member.ID || member.id || index} className={styles.card}>
+              <div className={styles.cardPhoto}>
+                {member.photo_url ? (
+                  <img
+                    src={member.photo_url}
+                    alt={`${member.이름 || member.name} 사진`}
+                    onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
+                  />
+                ) : null}
+                <div className={styles.photoPlaceholder} style={{ display: member.photo_url ? 'none' : 'flex' }}>
+                  <span className={styles.placeholderInitial}>
+                    {(member.이름 || member.name || '?').charAt(0)}
+                  </span>
+                </div>
+              </div>
               <div className={styles.cardHeader}>
                 <div className={styles.nameRow}>
                   <span className={styles.memberName}>{member.이름 || member.name || '이름 없음'}</span>
