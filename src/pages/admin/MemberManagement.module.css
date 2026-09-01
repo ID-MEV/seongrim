@@ -137,24 +137,41 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.cardInfo {
-  padding: 14px 16px;
+.searchSelect {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: white;
+  color: #333;
+}
+
+.resetBtn {
+  padding: 8px 14px;
+  background: #f0f0f0;
+  color: #666;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.resetBtn:hover {
+  background: #e0e0e0;
 }
 
 .nameRow {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 6px;
+  align-items: center;
+  margin-bottom: 4px;
 }
 
 .memberName {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: #1a1a2e;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .memberGender {
@@ -164,60 +181,38 @@
   border-radius: 12px;
   background: #e8f0f0;
   color: #1E4040;
-  white-space: nowrap;
 }
 
 .memberPosition {
   font-size: 0.85rem;
-  color: #555;
-  margin-bottom: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.memberOrder {
-  font-size: 0.75rem;
-  color: #999;
-  font-weight: 500;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid #eee;
-}
-
-.pageBtn {
-  padding: 8px 16px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  color: #333;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.pageBtn:hover:not(:disabled) {
-  background: #1E4040;
-  border-color: #1E4040;
-  color: white;
-}
-
-.pageBtn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.pageInfo {
-  font-size: 0.9rem;
   color: #666;
+}
+
+.cardHeader {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cardBody {
+  padding: 10px 16px 14px;
+  background: #fafafa;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.infoLabel {
+  color: #777;
   font-weight: 500;
+}
+
+.infoValue {
+  color: #1E4040;
+  font-weight: 600;
 }
 
 /* 반응형 */
@@ -234,20 +229,11 @@
 
   .searchWrapper {
     width: 100%;
+    flex-wrap: wrap;
   }
 
   .searchInput {
     flex: 1;
-    width: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .cardGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .placeholderInitial {
-    font-size: 2.5rem;
+    min-width: 140px;
   }
 }
