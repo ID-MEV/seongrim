@@ -6,7 +6,8 @@ import { SkeletonSettings } from '../../components/Skeleton/Skeleton';
 const API_BASE = '/api/admin';
 
 const SettingsManagement = () => {
-  const { token } = useAuth();
+  const { user } = useAuth();
+  const token = user?.token;
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -24,6 +25,10 @@ const SettingsManagement = () => {
 
   // 회원 목록 불러오기
   const fetchMembers = async () => {
+    if (!token) {
+      setLoading(false);
+      return;
+    }
     try {
       const res = await fetch(`${API_BASE}/members`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -41,7 +46,7 @@ const SettingsManagement = () => {
 
   useEffect(() => {
     fetchMembers();
-  }, []);
+  }, [token]);
 
   // 사진 파일 선택 핸들러
   const handleFileChange = (e) => {
@@ -141,7 +146,16 @@ const SettingsManagement = () => {
 
   if (loading) return <SkeletonSettings />;
 
-  return (
+  if (!token) {
+    return (
+      <div className={styles.section} style={{ textAlign: 'center', padding: '40px 20px' }}>
+        <h2 style={{ marginBottom: 12 }}>🔐 관리자 로그인이 필요합니다</h2>
+        <p style={{ color: '#666', fontSize: '0.95rem' }}>
+          회원 등록, 사진 업로드 및 회원 삭제 기능은 상단 메뉴에서 관리자 계정으로 로그인 후 이용하실 수 있습니다.
+        </p>
+      </div>
+    );
+  }
     <div className={styles.container}>
       {/* 1. 신규 회원 추가 세션 */}
       <div className={styles.section}>
