@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import styles from '../AdminPage.module.css';
-import { SkeletonMembers } from '../../components/Skeleton/Skeleton';
+import styles from './MemberManagement.module.css';
+import { SkeletonMembersCard } from '../../components/Skeleton/Skeleton';
 
 const API_BASE = '/api/admin';
 
@@ -11,19 +11,28 @@ const MemberManagement = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const PAGE_SIZE = 12;
 
-  const fetchMembers = async () => {
+  const fetchMembers = async (page = 1) => {
     setLoading(true);
     try {
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: PAGE_SIZE.toString(),
+        search,
+      });
       const [res] = await Promise.all([
-        fetch(`${API_BASE}/members`, {
+        fetch(`${API_BASE}/members?${params}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        new Promise(r => setTimeout(r, 500)),
+        new Promise(r => setTimeout(r, 300)),
       ]);
       if (!res.ok) throw new Error('회원 목록을 불러올 수 없습니다.');
       const data = await res.json();
-      setMembers(data);
+      setMembers(data.members || data);
+      setTotalPages(data.pagination?.totalPages || 1);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -32,70 +41,98 @@ const MemberManagement = () => {
   };
 
   useEffect(() => {
-    fetchMembers();
-  }, []);
+    fetchMembers(1);
+    setCurrentPage(1);
+  }, [search]);
 
-  const filtered = search
-    ? members.filter(
-        (m) =>
-          (m.이름 && m.이름.includes(search)) ||
-          (m.직분 && m.직분.includes(search)) ||
-          (m.휴대번호 && m.휴대번호.includes(search))
-      )
-    : members;
+  useEffect(() => {
+    if (!search) return;
+    const timer = setTimeout(() => {
+      fetchMembers(1);
+      setCurrentPage(1);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search]);
 
-  if (loading) return <SkeletonMembers />;
-  if (error) return <div className={styles.empty}>오류: {error}</div>;
+  const filteredMembers = members;
+
+  if (loading) return <SkeletonMembersCard count={PAGE_SIZE} />;
+  if (error) return <div className={styles.error}>오류: {error}</div>;
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
-        <h2 style={{ fontSize: '1.1rem', margin: 0 }}>회원 목록 ({members.length}명)</h2>
-        <div style={{ display: 'flex', gap: 8 }}>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h2>회원 관리 <span className={styles.count}>({members.length}명)</span></h2>
+        <div className={styles.searchWrapper}>
           <input
             type="text"
-            placeholder="이름, 직분, 전화번호 검색"
+            placeholder="이름, 직분, 성별로 검색..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ padding: '6px 12px', border: '1px solid #ddd', borderRadius: 4, fontSize: '0.85rem', width: 200 }}
+            className={styles.searchInput}
+            autoFocus
           />
-          <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={fetchMembers}>
+          <button className={styles.refreshBtn} onClick={() => fetchMembers(currentPage)}>
             새로고침
           </button>
         </div>
       </div>
 
-      {filtered.length === 0 ? (
-        <div className={styles.empty}>{search ? '검색 결과가 없습니다.' : '등록된 회원이 없습니다.'}</div>
-      ) : (
-        <div style={{ overflowX: 'auto' }}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th style={{ width: 60 }}>ID</th>
-                <th>이름</th>
-                <th>직분</th>
-                <th>휴대번호</th>
-                <th>자택번호</th>
-                <th>주소</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((member) => (
-                <tr key={member.ID}>
-                  <td>{member.ID}</td>
-                  <td style={{ fontWeight: 600 }}>{member.이름}</td>
-                  <td>{member.직분 || '-'}</td>
-                  <td style={{ fontSize: '0.85rem' }}>{member.휴대번호 || '-'}</td>
-                  <td style={{ fontSize: '0.85rem' }}>{member.자택번호 || '-'}</td>
-                  <td style={{ fontSize: '0.8rem', maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {member.주소 || '-'}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {filteredMembers.length === 0 ? (
+        <div className={styles.empty}>
+          {search ? '검색 결과가 없습니다.' : '등록된 회원이 없습니다.'}
         </div>
+      ) : (
+        <>
+          <div className={styles.cardGrid}>
+            {filteredMembers.map((member) => (
+              <div key={member.id} className={styles.card}>
+                <div className={styles.cardPhoto}>
+                  {member.photo_url ? (
+                    <img
+                      src={member.photo_url}
+                      alt={`${member.name} 사진`}
+                      onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
+                    />
+                  ) : null}
+                  <div className={styles.photoPlaceholder} style={{ display: member.photo_url ? 'none' : 'flex' }}>
+                    <span className={styles.placeholderInitial}>{member.name?.charAt(0) || '?'}</span>
+                  </div>
+                </div>
+                <div className={styles.cardInfo}>
+                  <div className={styles.nameRow}>
+                    <span className={styles.memberName}>{member.name || '이름 없음'}</span>
+                    <span className={styles.memberGender}>{member.gender || '-'}</span>
+                  </div>
+                  <div className={styles.memberPosition}>{member.position || '직분 없음'}</div>
+                  <div className={styles.memberOrder}>순서: {member.order !== undefined ? member.order : '-'}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className={styles.pagination}>
+              <button
+                className={styles.pageBtn}
+                onClick={() => fetchMembers(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                ◀ 이전
+              </button>
+              <span className={styles.pageInfo}>
+                {currentPage} / {totalPages} 페이지
+              </span>
+              <button
+                className={styles.pageBtn}
+                onClick={() => fetchMembers(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                다음 ▶
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

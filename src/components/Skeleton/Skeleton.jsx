@@ -91,7 +91,36 @@ export const SkeletonSettings = () => (
   </div>
 );
 
-// 회원 목록 스켈레톤
+// 회원 목록 스켈레톤 (카드 그리드)
+export const SkeletonMembersCard = ({ count = 12 }) => (
+  <div>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
+      <div className={styles.skeleton} style={{ width: '120px', height: '24px' }} />
+      <div style={{ display: 'flex', gap: 8 }}>
+        <div className={styles.skeleton} style={{ width: '260px', height: '36px', borderRadius: '6px' }} />
+        <div className={styles.skeleton} style={{ width: '100px', height: '36px', borderRadius: '6px' }} />
+      </div>
+    </div>
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+      gap: '16px'
+    }}>
+      {Array.from({ length: count }).map((_, i) => (
+        <div key={i} style={{ background: 'white', border: '1px solid #e8e8e8', borderRadius: '12px', overflow: 'hidden' }}>
+          <div className={styles.skeleton} style={{ width: '100%', aspectRatio: '1', background: '#f5f5f5' }} />
+          <div style={{ padding: '14px 16px' }}>
+            <div className={styles.skeleton} style={{ width: '60%', height: '18px', marginBottom: '8px', borderRadius: '4px' }} />
+            <div className={styles.skeleton} style={{ width: '40%', height: '14px', marginBottom: '6px', borderRadius: '4px' }} />
+            <div className={styles.skeleton} style={{ width: '30%', height: '12px', borderRadius: '4px' }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+// 회원 목록 스켈레톤 (기존 테이블용 - 호환성 유지)
 export const SkeletonMembers = () => (
   <div>
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
