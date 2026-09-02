@@ -267,7 +267,11 @@ const SettingsManagement = () => {
                     <td>{m.ID || m.id}</td>
                     <td>
                       {m.photo_url ? (
-                        <img src={m.photo_url} alt={m.이름} className={styles.tableAvatar} />
+                        <img 
+                          src={m.photo_url.startsWith('http') ? m.photo_url : `https://api.mev.o-r.kr${m.photo_url}`} 
+                          alt={m.이름} 
+                          className={styles.tableAvatar} 
+                        />
                       ) : (
                         <span className={styles.noPhoto}>없음</span>
                       )}

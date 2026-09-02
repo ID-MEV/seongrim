@@ -98,7 +98,7 @@ const MemberManagement = () => {
               <div className={styles.cardPhoto}>
                 {member.photo_url ? (
                   <img
-                    src={member.photo_url}
+                    src={member.photo_url.startsWith('http') ? member.photo_url : `https://api.mev.o-r.kr${member.photo_url}`}
                     alt={`${member.이름 || member.name} 사진`}
                     onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
                   />
