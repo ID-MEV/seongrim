@@ -136,8 +136,9 @@ const SettingsManagement = () => {
         headers: { Authorization: `Bearer ${token}` },
         body: photoFormData,
       });
-      if (!res.ok) throw new Error('사진 업로드 실패');
-      setMessage('✅ 회원 사진이 업로드되었습니다.');
+      const data = await res.json();
+      const pathInfo = data.saved_path ? ` (저장 위치: ${data.saved_path})` : '';
+      setMessage(`✅ 회원 사진이 업로드되었습니다.${pathInfo}`);
       fetchMembers();
     } catch (err) {
       setMessage('❌ ' + err.message);
