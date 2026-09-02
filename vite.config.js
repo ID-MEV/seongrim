@@ -25,6 +25,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      '/uploads': {
+        target: 'https://api.mev.o-r.kr',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   }
 });
