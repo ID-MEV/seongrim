@@ -3,6 +3,8 @@ import { useAuth } from '../../contexts/AuthContext';
 import styles from './AdminStats.module.css';
 import { SkeletonDashboard } from '../../components/Skeleton/Skeleton';
 
+const API_BASE_URL = import.meta.env.VITE_YOUTUBE_API_BASE_URL || 'https://api.mev.o-r.kr';
+
 const AdminStats = () => {
   const { user } = useAuth();
   const token = user?.token;
@@ -14,7 +16,7 @@ const AdminStats = () => {
     const fetchStats = async () => {
       try {
         const [res] = await Promise.all([
-          fetch('/api/admin/stats', {
+          fetch(`${API_BASE_URL}/api/admin/stats`, {
             headers: { 'Authorization': `Bearer ${token}` },
           }),
           new Promise(r => setTimeout(r, 500)),

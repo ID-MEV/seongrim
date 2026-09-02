@@ -3,7 +3,8 @@ import { useAuth } from '../../contexts/AuthContext';
 import styles from './SettingsManagement.module.css';
 import { SkeletonSettings } from '../../components/Skeleton/Skeleton';
 
-const API_BASE = '/api/admin';
+const API_BASE_URL = import.meta.env.VITE_YOUTUBE_API_BASE_URL || 'https://api.mev.o-r.kr';
+const API_BASE = `${API_BASE_URL}/api/admin`;
 
 const SettingsManagement = () => {
   const { user } = useAuth();

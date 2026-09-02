@@ -3,7 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import styles from './MemberManagement.module.css';
 import { SkeletonMembersCard } from '../../components/Skeleton/Skeleton';
 
-const API_BASE = '/api/admin';
+const API_BASE_URL = import.meta.env.VITE_YOUTUBE_API_BASE_URL || 'https://api.mev.o-r.kr';
 
 const MemberManagement = () => {
   const { token } = useAuth();
@@ -17,7 +17,7 @@ const MemberManagement = () => {
     setLoading(true);
     setError(null);
     try {
-      let url = '/api/member';
+      let url = `${API_BASE_URL}/api/member`;
       if (queryValue.trim()) {
         const params = new URLSearchParams({
           field: queryField,
