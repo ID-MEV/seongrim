@@ -3,14 +3,13 @@ import { useAuth } from '../contexts/AuthContext';
 import styles from './AdminPanel.module.css';
 
 const AdminPanel = () => {
-  const { user, logout } = useAuth();
+  const { user, token, logout } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const token = localStorage.getItem('admin_token');
         const res = await fetch('https://api.mev.o-r.kr/api/admin/stats', {
           headers: { 'Authorization': `Bearer ${token}` },
         });
@@ -24,8 +23,8 @@ const AdminPanel = () => {
         setLoading(false);
       }
     };
-    fetchStats();
-  }, []);
+    if (token) fetchStats();
+  }, [token]);
 
   return (
     <div className={styles.adminPanel}>
