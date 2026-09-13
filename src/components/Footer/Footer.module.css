@@ -75,3 +75,32 @@
   height: auto;
   display: block;
 }
+
+/* 모바일 환경 설정 (768px 이하) */
+@media (max-width: 768px) {
+  .footer {
+    padding: 1.5rem 1rem; /* 전체 여백 축소 */
+  }
+
+  .footerContent {
+    flex-direction: column; /* 가로 배치를 세로 배치로 변경 */
+    align-items: center;    /* 중앙 정렬 */
+    text-align: center;     /* 텍스트 중앙 정렬 */
+    gap: 1rem;              /* 이미지와 텍스트 사이 간격 축소 */
+    padding-bottom: 1.5rem;
+  }
+
+  .footerImage img {
+    max-width: 160px;       /* 모바일 화면에 맞춰 이미지 크기 축소 */
+  }
+
+  .logo {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .churchInfo p {
+    font-size: 0.8rem;      /* 모바일용 폰트 크기 조정 */
+    margin: 0.3rem 0;
+  }
+}
