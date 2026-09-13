@@ -31,3 +31,6 @@ node_modules/
 .vscode
 settins.json
 # OS specific
+
+# Agent rules & confidential documentation
+AGENTS.md
